@@ -6,7 +6,7 @@ const GEMINI_API_KEY: string = import.meta.env.VITE_GEMINI_KEY;
 // APIキーを使用してGoogleGenerativeAIのインスタンスを作成
 const genAI = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
-const callGeminiAPI = async (prompt: string): Promise<string> => {
+export const callGeminiAPI = async (prompt: string): Promise<string> => {
     // プロンプトに基づいてGeminiAPIを呼び出し、出力を取得
     const response = await genAI.models.generateContent({
         model: "gemini-2.0-flash",
