@@ -72,3 +72,4 @@ export default defineConfig([
 ])
 ```
 # gemini-quiz-app
+# toon-app
