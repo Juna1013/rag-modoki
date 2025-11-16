@@ -1,0 +1,51 @@
+export interface QuizData {
+  id: number;
+  question: string;
+  choices: string[];
+  answer: number;
+  explanation: string;
+}
+
+export function parseTOON(toonText: string): QuizData[] {
+  const lines = toonText.trim().split('\n');
+  const quizzes: QuizData[] = [];
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    
+    // [id]{...}: の行をスキップ
+    if (line.startsWith('[') && line.includes('{')) {
+      continue;
+    }
+    
+    // データ行をパース
+    const parts = line.split(' | ');
+    if (parts.length === 4) {
+      const question = parts[0].trim();
+      const choices = parts[1].split(',').map(c => c.trim());
+      const answer = parseInt(parts[2].trim());
+      const explanation = parts[3].trim();
+      
+      // IDを取得（前の行から）
+      let id = quizzes.length + 1;
+      if (i > 0) {
+        const prevLine = lines[i - 1];
+        const idMatch = prevLine.match(/\[(\d+)\]/);
+        if (idMatch) {
+          id = parseInt(idMatch[1]);
+        }
+      }
+      
+      quizzes.push({
+        id,
+        question,
+        choices,
+        answer,
+        explanation
+      });
+    }
+  }
+  
+  return quizzes;
+}

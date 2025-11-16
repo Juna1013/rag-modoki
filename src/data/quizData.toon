@@ -1,0 +1,20 @@
+[1]{question,choices[4],answer,explanation}:
+太陽はどれ？ | Sun,Moon,Mars,Earth | 0 | Sun が太陽です。
+[2]{question,choices[4],answer,explanation}:
+ITILとは何か？ | ITサービス管理のフレームワーク,プログラミング言語,データベース,OS | 0 | ITILはITサービス管理のベストプラクティス集です。
+[3]{question,choices[4],answer,explanation}:
+PaaSの正式名称は？ | Platform as a Service,Product as a Service,Program as a Service,Performance as a Service | 0 | PaaSはPlatform as a Serviceの略です。
+[4]{question,choices[4],answer,explanation}:
+ブロックチェーンの特徴は？ | 分散型台帳技術,中央集権型DB,一時的データ保存,単一サーバー | 0 | ブロックチェーンは分散型台帳技術です。
+[5]{question,choices[4],answer,explanation}:
+SCMとは？ | Supply Chain Management,Source Code Management,System Control Module,Security Certificate Manager | 0 | SCMはサプライチェーン管理を指します。
+[6]{question,choices[4],answer,explanation}:
+SLAとは？ | Service Level Agreement,Software License Agreement,System Load Average,Security Level Access | 0 | SLAはサービスレベル合意のことです。
+[7]{question,choices[4],answer,explanation}:
+アジャイル開発の特徴は？ | 反復的な開発,ウォーターフォール,一度きりのリリース,長期計画のみ | 0 | アジャイルは反復的で柔軟な開発手法です。
+[8]{question,choices[4],answer,explanation}:
+DDoS攻撃とは？ | 分散サービス拒否攻撃,データ削除攻撃,暗号化攻撃,物理的破壊 | 0 | DDoSは分散型のサービス拒否攻撃です。
+[9]{question,choices[4],answer,explanation}:
+IoTの意味は？ | Internet of Things,Internet of Technology,Input Output Terminal,Integrated Online Tools | 0 | IoTはモノのインターネットを意味します。
+[10]{question,choices[4],answer,explanation}:
+データベースの正規化の目的は？ | データの冗長性削減,データ量増加,処理速度低下,複雑化 | 0 | 正規化はデータの冗長性を削減します。
