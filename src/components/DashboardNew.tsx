@@ -1,58 +1,25 @@
+import React from 'react';
 import Footer from './Footer';
-import type { QuizData } from '../utils/toonParser';
-import { baseStyles, headerStyles, tileStyles, utilityStyles } from '../styles/sharedStyles';
+import { baseStyles } from '../styles/sharedStyles';
 
 interface DashboardProps {
-  quizList: QuizData[];
-  onStartQuiz: (selectedQuestions: QuizData[]) => void;
-  onNavigateToRagBot?: () => void;
+  onNavigateToRagBot: () => void;
+  onNavigateToContent: (type: string) => void;
 }
 
-const DashboardNew = ({ quizList, onStartQuiz, onNavigateToRagBot }: DashboardProps) => {
-
-  const getDifficultyQuestions = (difficulty: string): QuizData[] => {
-    switch (difficulty) {
-      case '基本':
-        return quizList.filter(q => q.id >= 1 && q.id <= 10);
-      case '中級':
-        return quizList.filter(q => q.id >= 11 && q.id <= 20);
-      case '上級':
-        return quizList.filter(q => q.id >= 21 && q.id <= 30);
-      default:
-        return [];
-    }
-  };
-
-  const getRandomQuestions = (questions: QuizData[], count: number = 5): QuizData[] => {
-    const shuffled = [...questions].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, Math.min(count, questions.length));
-  };
-
-  const handleStartQuiz = (difficulty: string) => {
-    if (difficulty === 'RAGボット') {
-      onNavigateToRagBot?.();
-      return;
-    }
-    const difficultyQuestions = getDifficultyQuestions(difficulty);
-    const randomQuestions = getRandomQuestions(difficultyQuestions, 5);
-    onStartQuiz(randomQuestions);
-  };
-
-  const difficulties = ['基本', '中級', '上級', 'RAGボット'];
-
-
+const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigateToContent }) => {
   return (
     <div className={baseStyles.appBackground}>
       <div className={baseStyles.pageContainer}>
         <div className={baseStyles.contentContainer}>
-          {/* GitHub Link - Top Right */}
-          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30">
+          {/* ヘッダー */}
+          <header className="mb-8 sm:mb-12 text-center">
             <a
               href="https://github.com/Juna1013/gemini-quiz-app"
               target="_blank"
               rel="noopener noreferrer"
-              className={utilityStyles.githubIcon}
-              title="View on GitHub"
+              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-full hover:bg-gray-900 transition-all duration-200"
+              title="GitHubで表示"
             >
               <svg
                 className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:text-gray-200 transition-colors duration-200"
@@ -67,90 +34,116 @@ const DashboardNew = ({ quizList, onStartQuiz, onNavigateToRagBot }: DashboardPr
                 />
               </svg>
             </a>
-          </div>
 
-          <header className={headerStyles.pageHeader}>
-            <h1 className={headerStyles.pageTitle}>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight">
               応用情報技術者試験 クイズ
             </h1>
-            <div className={headerStyles.pageSubtitle}>
-              <span>難易度を選んでクイズに挑戦しよう！</span>
-            </div>
+            <p className="text-gray-600 text-base sm:text-lg md:text-xl">
+              AIが希望するテーマから最適な問題を出題
+            </p>
           </header>
 
-          <div className="mb-6 sm:mb-8">
-            <div className={baseStyles.dashboardGrid}>
-              {difficulties.map(difficulty => {
-                const questions = difficulty === 'RAGボット' ? [] : getDifficultyQuestions(difficulty);
+          {/* コンテンツセクション */}
+          <div className="grid grid-cols-1 gap-6">
+            {/* サイバーセキュリティ */}
+            <button
+              onClick={() => onNavigateToContent('サイバーセキュリティ')}
+              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                  🔒
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                  2025年度の
+                  <br />
+                  サイバーセキュリティ事案
+                </h2>
+              </div>
+              <p className="text-sm text-black">
+                最新のセキュリティ脅威と対策について詳しく解説します。
+              </p>
+            </button>
 
+            {/* クラウド比較 */}
+            <button
+              onClick={() => onNavigateToContent('クラウド比較')}
+              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                  ☁️
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                  クラウドと
+                  <br />
+                  オンプレミス比較
+                </h2>
+              </div>
+              <p className="text-sm text-black">
+                システム導入時の重要な検討項目を比較解説。
+              </p>
+            </button>
 
-                return (
-                  <div key={difficulty} className="relative group">
-                    <div
-                      className={tileStyles.base}
-                      onClick={() => handleStartQuiz(difficulty)}
-                    >
-                      <div className={tileStyles.content}>
-                        <div className={tileStyles.info}>
-                          <div className={tileStyles.icon}>
-                            {difficulty === 'RAGボット' ? '🤖' : 
-                             difficulty === '基本' ? '📚' : 
-                             difficulty === '中級' ? '⚙️' : '🏆'}
-                          </div>
-                          <div>
-                            <h3 className={tileStyles.title}>
-                              {difficulty === 'RAGボット' ? (
-                                <>
-                                  RAGボット
-                                  <span className="text-xs bg-white/20 text-white backdrop-blur-sm px-2 py-1 rounded-full font-medium border border-white/30">AI生成</span>
-                                </>
-                              ) : (
-                                `${difficulty}レベル`
-                              )}
-                            </h3>
-                            <p className={tileStyles.subtitle}>
-                              {difficulty === '基本' ? '基礎固めに最適' : 
-                               difficulty === '中級' ? '実践力を身につけよう' : 
-                               difficulty === '上級' ? 'エキスパートレベル' :
-                               'AIカスタム問題'}
-                            </p>
-                          </div>
-                        </div>
-                        <div className={tileStyles.stats}>
-                          {difficulty !== 'RAGボット' ? (
-                            <>
-                              <div className={tileStyles.number}>{questions.length}</div>
-                              <div className={tileStyles.label}>問題</div>
-                            </>
-                          ) : (
-                            <div className={tileStyles.number}>∞</div>
-                          )}
-                        </div>
-                      </div>
+            {/* RAGの解説 */}
+            <button
+              onClick={() => onNavigateToContent('RAGの解説')}
+              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                  🤖
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                  RAG
+                  <br />
+                  の解説
+                </h2>
+              </div>
+              <p className="text-sm text-black">
+                検索拡張生成技術について詳しく学べます。
+              </p>
+            </button>
 
-                      <div className={tileStyles.description}>
-                        {difficulty === '基本' ? 'IT基礎知識・基本概念・用語理解を中心とした問題' : 
-                         difficulty === '中級' ? 'アルゴリズム・設計・開発手法など実践的な技術問題' : 
-                         difficulty === '上級' ? '高度なアーキテクチャ・最新技術・理論的な問題' :
-                         '希望するトピックに基づいてAIが5問のカスタム問題を生成'}
-                      </div>
+            {/* 紙アンケートのOpenCVによるスキャン */}
+            <button
+              onClick={() => onNavigateToContent('紙アンケートのOpenCVによるスキャン')}
+              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                  📱
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                  紙アンケートの
+                  <br />
+                  OpenCV処理
+                </h2>
+              </div>
+              <p className="text-sm text-black">
+                画像処理による自動化技術を解説します。
+              </p>
+            </button>
 
-                      <div className="flex items-center justify-between pt-2 border-t border-white/20">
-                        <span className="text-xs text-gray-500 dark:text-gray-400">
-                          {difficulty === 'RAGボット' ? 'カスタム生成' : `難易度: ${difficulty}`}
-                        </span>
-                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors">
-                          <span className="mr-1">タップして開始</span>
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+            {/* RAGボット - ナビゲーションタイル */}
+            <button
+              onClick={onNavigateToRagBot}
+              className="w-full bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group text-left"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                  ✨
+                </div>
+                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                  RAG による
+                  <br />
+                  クイズレコメンド
+                </h2>
+              </div>
+              <p className="text-sm text-black">
+                希望するトピックから最適な問題を AI が選択します。
+              </p>
+            </button>
           </div>
         </div>
       </div>

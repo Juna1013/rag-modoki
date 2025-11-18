@@ -125,16 +125,16 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
   return (
     <div className="space-y-6">
       {/* 説明文 */}
-      <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <div className="flex items-start space-x-3">
           <div className="w-5 h-5 mt-0.5 flex-shrink-0">
-            <svg className="text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
           </div>
           <div>
-            <div className="text-purple-800 text-sm font-medium mb-1">RAG による問題選択システム</div>
-            <div className="text-purple-700 text-xs leading-relaxed">
+            <div className="text-blue-800 text-sm font-medium mb-1">RAG による問題選択システム</div>
+            <div className="text-blue-700 text-xs leading-relaxed">
               希望するトピックやキーワードを入力すると、既存の問題データベースから関連する5問を検索・選択してクイズを開始できます。
             </div>
           </div>
@@ -148,7 +148,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
             希望するトピック・キーワード
           </label>
           <textarea
-            className="w-full rounded-md border border-gray-300 p-3 text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="w-full rounded-md border border-gray-300 p-3 text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             rows={3}
             value={query}
             onChange={e => setQuery(e.target.value)}
@@ -163,7 +163,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
           <button
             onClick={handleGenerate}
             disabled={loading}
-            className="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+            className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {loading ? (
               <>
@@ -185,7 +185,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
           
           <button
             onClick={() => { setQuery(''); setMessages([]); setError(null); }}
-            className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
+            className="bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -197,8 +197,8 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
 
       {/* 結果表示エリア */}
       {(error || messages.length > 0) && (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-            <h4 className="text-gray-800 font-medium mb-3 flex items-center">
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <h4 className="text-blue-800 font-medium mb-3 flex items-center">
             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>
@@ -216,7 +216,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
           )}
           
           {messages.map((m, i) => (
-            <div key={i} className="bg-white border border-gray-200 rounded-lg p-3 mt-2">
+            <div key={i} className="bg-white border border-blue-200 rounded-lg p-3 mt-2">
               <pre className="whitespace-pre-wrap text-gray-800 text-xs sm:text-sm font-mono leading-relaxed overflow-auto max-h-60">{m}</pre>
             </div>
           ))}

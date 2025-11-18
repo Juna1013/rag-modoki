@@ -1,24 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css'
 
 // コンポーネントのインポート
 import Dashboard from './components/DashboardNew';
 import Quiz from './components/Quiz';
 import RagBotPage from './components/RagBotPage';
-import { parseTOON } from './utils/toonParser';
+import ContentPage from './components/ContentPage';
 import type { QuizData } from './utils/toonParser';
-import quizDataToon from './data/quizData.toon?raw';
 
 function App() {
-    const [quizList, setQuizList] = useState<QuizData[]>([]);
-    const [currentView, setCurrentView] = useState<'dashboard' | 'quiz' | 'ragbot'>('dashboard');
+    const [currentView, setCurrentView] = useState<'dashboard' | 'quiz' | 'ragbot' | 'content'>('dashboard');
     const [selectedQuestions, setSelectedQuestions] = useState<QuizData[]>([]);
-
-    // TOON形式データをパース
-    useEffect(() => {
-        const parsed = parseTOON(quizDataToon);
-        setQuizList(parsed);
-    }, []);
+    const [contentType, setContentType] = useState<string>('');
 
     // クイズ開始
     const handleStartQuiz = (questions: QuizData[]) => {
@@ -26,9 +19,15 @@ function App() {
         setCurrentView('quiz');
     };
 
-    // RAGボットページに移動
+    // RAGボットページへ移動
     const handleNavigateToRagBot = () => {
         setCurrentView('ragbot');
+    };
+
+    // コンテンツページへ移動
+    const handleNavigateToContent = (type: string) => {
+        setContentType(type);
+        setCurrentView('content');
     };
 
     // ダッシュボードに戻る
@@ -41,15 +40,22 @@ function App() {
         <div className="App">
             {currentView === 'dashboard' && (
                 <Dashboard
-                    quizList={quizList}
                     onStartQuiz={handleStartQuiz}
                     onNavigateToRagBot={handleNavigateToRagBot}
+                    onNavigateToContent={handleNavigateToContent}
                 />
             )}
             
             {currentView === 'ragbot' && (
                 <RagBotPage
                     onStartQuiz={handleStartQuiz}
+                    onBackToDashboard={handleBackToDashboard}
+                />
+            )}
+            
+            {currentView === 'content' && (
+                <ContentPage
+                    title={contentType}
                     onBackToDashboard={handleBackToDashboard}
                 />
             )}

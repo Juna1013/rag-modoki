@@ -5,7 +5,7 @@
 // ベース背景とレイアウト
 export const baseStyles = {
   appBackground: 'min-h-screen w-full flex flex-col bg-gradient-to-br from-sky-100 via-blue-200 to-cyan-300',
-  pageContainer: 'flex-grow flex flex-col items-center pt-4 sm:pt-6 md:pt-12 pb-4 sm:pb-6 md:pb-8 px-4 sm:px-6 lg:px-8',
+  pageContainer: 'flex-grow flex flex-col items-center pt-4 sm:pt-6 md:pt-12 pb-2 sm:pb-2 md:pb-2 px-4 sm:px-6 lg:px-8',
   contentContainer: 'w-full max-w-6xl',
   dashboardGrid: 'grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8 max-w-2xl mx-auto'
 };
@@ -76,16 +76,16 @@ export const questionStyles = {
 
 // 結果表示スタイル
 export const resultStyles = {
-  cardCorrect: 'mt-6 p-6 rounded-2xl bg-green-50',
+  cardCorrect: 'mt-6 p-6 rounded-2xl bg-blue-50',
   cardIncorrect: 'mt-6 p-6 rounded-2xl bg-red-50',
-  cardFinal: 'mt-6 p-6 rounded-2xl bg-blue-50',
-  titleCorrect: 'text-xl font-bold mb-3 text-green-700',
+  cardFinal: 'mt-6 p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-cyan-50',
+  titleCorrect: 'text-xl font-bold mb-3 text-blue-700',
   titleIncorrect: 'text-xl font-bold mb-3 text-red-700',
-  titleFinal: 'text-xl font-bold mb-3 text-blue-700 text-center',
+  titleFinal: 'text-xl font-bold mb-3 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent text-center',
   text: 'text-gray-700',
   score: 'text-center space-y-2',
-  scoreNumber: 'text-2xl font-bold text-blue-800',
-  scorePercentage: 'text-lg text-blue-700'
+  scoreNumber: 'text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent',
+  scorePercentage: 'text-lg bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent'
 };
 
 // バッジスタイル
@@ -97,7 +97,7 @@ export const badgeStyles = {
 
 // フッタースタイル
 export const footerStyles = {
-  container: 'w-full bg-white mt-auto',
+  container: 'w-full bg-transparent mt-auto',
   content: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4',
   text: 'flex justify-center items-center text-sm text-gray-600'
 };

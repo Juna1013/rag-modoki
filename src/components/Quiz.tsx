@@ -120,7 +120,7 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
           <div className="mb-6 sm:mb-8 px-2 sm:px-0">
             <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
               <div 
-                className="bg-gradient-to-r from-indigo-500 to-purple-600 h-1.5 sm:h-2 rounded-full transition-all duration-300"
+                className="bg-gradient-to-r from-blue-600 to-cyan-500 h-1.5 sm:h-2 rounded-full transition-all duration-300"
                 style={{
                   width: `${(questionNumber / questions.length) * 100}%`
                 }}
@@ -188,8 +188,8 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
                 className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base"
                 sx={{
                   background: isLastQuestion 
-                    ? 'linear-gradient(45deg, #FF6B6B 30%, #FFE66D 90%)'
-                    : 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+                    ? 'linear-gradient(45deg, #0EA5E9 30%, #06B6D4 90%)'
+                    : 'linear-gradient(45deg, #2563EB 30%, #0EA5E9 90%)',
                   minWidth: { xs: '120px', sm: 'auto' }
                 }}
               >
@@ -207,7 +207,7 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
               onClick={onBackToDashboard}
               className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base mr-4"
               sx={{
-                background: 'linear-gradient(45deg, #4CAF50 30%, #8BC34A 90%)',
+                background: 'linear-gradient(45deg, #0EA5E9 30%, #06B6D4 90%)',
                 minWidth: { xs: '120px', sm: 'auto' }
               }}
             >
@@ -219,7 +219,13 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
               onClick={resetQuiz}
               className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base"
               sx={{
-                minWidth: { xs: '120px', sm: 'auto' }
+                minWidth: { xs: '120px', sm: 'auto' },
+                borderColor: '#2563EB',
+                color: '#2563EB',
+                '&:hover': {
+                  borderColor: '#0EA5E9',
+                  color: '#0EA5E9'
+                }
               }}
             >
               もう一度挑戦

@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from './Footer';
 import RagBot from './RagBot';
 import type { QuizData } from '../utils/toonParser';
-import { baseStyles, headerStyles, buttonStyles, cardStyles, badgeStyles } from '../styles/sharedStyles';
+import { baseStyles, headerStyles, buttonStyles, cardStyles } from '../styles/sharedStyles';
 
 interface RagBotPageProps {
   onStartQuiz: (selectedQuestions: QuizData[]) => void;
@@ -29,23 +29,17 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
             </div>
             
             <div className="text-center">
-              <h1 className={headerStyles.pageTitle}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight">
                 🤖 RAGボット
               </h1>
               <div className="flex items-center justify-center space-x-2 mb-4">
-                <span className={badgeStyles.purple}>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
                   AI問題選択システム
                 </span>
-                <span className={badgeStyles.indigo}>
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cyan-100 text-cyan-700">
                   カスタマイズ出題
                 </span>
               </div>
-              <p className="text-gray-600 dark:text-gray-400 text-base sm:text-lg md:text-xl mb-1 sm:mb-2">
-                希望するトピックから最適な問題を選択
-              </p>
-              <p className="text-xs sm:text-sm md:text-base text-gray-500 px-2">
-                💡 キーワードを入力して、関連する5問のクイズに挑戦しよう！
-              </p>
             </div>
           </header>
 
@@ -53,51 +47,6 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
           <div className={cardStyles.main}>
             <div className="p-6 sm:p-8 md:p-10">
               <RagBot onStartQuiz={onStartQuiz} />
-            </div>
-          </div>
-
-          {/* 特徴説明 */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className={cardStyles.feature}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={cardStyles.icon}>
-                  <svg className="w-5 h-5 text-purple-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <h3 className={cardStyles.title}>スマート検索</h3>
-              </div>
-              <p className={cardStyles.text}>
-                入力したキーワードから関連性の高い問題を自動で検索・選択します。
-              </p>
-            </div>
-
-            <div className={cardStyles.feature}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={cardStyles.icon}>
-                  <svg className="w-5 h-5 text-indigo-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <h3 className={cardStyles.title}>全レベル対応</h3>
-              </div>
-              <p className={cardStyles.text}>
-                基本・中級・上級の全レベルから最適な問題を組み合わせて出題します。
-              </p>
-            </div>
-
-            <div className={cardStyles.feature}>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className={cardStyles.icon}>
-                  <svg className="w-5 h-5 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className={cardStyles.title}>即座に開始</h3>
-              </div>
-              <p className={cardStyles.text}>
-                問題選択後、すぐにクイズが開始され、学習効率を最大化します。
-              </p>
             </div>
           </div>
         </div>
