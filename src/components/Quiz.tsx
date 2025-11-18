@@ -4,6 +4,7 @@ import ChoiceButtons from './ChoiceButtons';
 import Button from "@mui/material/Button";
 import Footer from './Footer';
 import type { QuizData } from '../utils/toonParser';
+import { baseStyles, headerStyles, buttonStyles, resultStyles } from '../styles/sharedStyles';
 
 interface QuizProps {
   questions: QuizData[];
@@ -84,32 +85,32 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
   }
 
   return (
-    <div className="min-h-screen w-full flex flex-col">
-      <div className="flex-grow flex flex-col items-center pt-4 sm:pt-6 md:pt-12 pb-4 sm:pb-6 md:pb-8 px-4 sm:px-6 lg:px-8">
-        <div className="quiz-container w-full max-w-6xl">
+    <div className={baseStyles.appBackground}>
+      <div className={baseStyles.pageContainer}>
+        <div className={baseStyles.contentContainer}>
           {/* ヘッダー */}
-          <header className="text-center mb-6 sm:mb-8">
-            <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0">
+          <header className={headerStyles.pageHeader}>
+            <div className={headerStyles.quizHeaderControls}>
               <button 
                 onClick={onBackToDashboard}
-                className="order-2 sm:order-1 px-4 py-2 bg-white/30 backdrop-blur-md border border-gray-300/50 rounded-xl text-xs sm:text-sm font-medium text-gray-800 hover:bg-white/40 hover:border-gray-400/60 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className={`${buttonStyles.quizControl} order-2 sm:order-1`}
               >
                 ← ダッシュボード
               </button>
-              <div className="text-base sm:text-lg md:text-xl font-semibold order-1 sm:order-2">
+              <div className={`${headerStyles.quizProgress} order-1 sm:order-2`}>
                 問題 {questionNumber}/{questions.length}
               </div>
               <button 
                 onClick={resetQuiz}
-                className="order-3 px-4 py-2 bg-white/30 backdrop-blur-md border border-gray-300/50 rounded-xl text-xs sm:text-sm font-medium text-gray-800 hover:bg-white/40 hover:border-gray-400/60 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className={`${buttonStyles.quizControl} order-3`}
               >
                 リセット
               </button>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2 leading-tight">
+            <h1 className={headerStyles.pageTitle}>
               応用情報技術者試験 クイズ
             </h1>
-            <div className="flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-600">
+            <div className={headerStyles.pageSubtitle}>
               <span>現在のスコア: {score}/{questionNumber - 1}</span>
               <span>正答率: {questionNumber > 1 ? Math.round((score / (questionNumber - 1)) * 100) : 0}%</span>
             </div>
@@ -143,17 +144,17 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
         
         {/* 回答結果表示 */}
         {result && (
-          <div className={`mt-6 p-6 rounded-2xl shadow-lg ${result.isCorrect ? 'bg-green-50 border-2 border-green-200' : 'bg-red-50 border-2 border-red-200'}`}>
-            <div className={`text-xl font-bold mb-3 ${result.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+          <div className={result.isCorrect ? resultStyles.cardCorrect : resultStyles.cardIncorrect}>
+            <div className={result.isCorrect ? resultStyles.titleCorrect : resultStyles.titleIncorrect}>
               {result.isCorrect ? '✓ 正解！' : '✗ 不正解'}
             </div>
             {!result.isCorrect && (
-              <div className="text-gray-700 mb-2">
+              <div className={resultStyles.text}>
                 <span className="font-semibold">正解: </span>
                 {result.correctChoice}
               </div>
             )}
-            <div className="text-gray-700">
+            <div className={resultStyles.text}>
               <span className="font-semibold">解説: </span>
               {result.explanation}
             </div>
@@ -162,15 +163,15 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
 
         {/* 最終結果表示 */}
         {showFinalResult && (
-          <div className="mt-6 p-6 rounded-2xl shadow-lg bg-blue-50 border-2 border-blue-200">
-            <div className="text-xl font-bold mb-3 text-blue-700 text-center">
+          <div className={resultStyles.cardFinal}>
+            <div className={resultStyles.titleFinal}>
               🎉 クイズ終了！
             </div>
-            <div className="text-center space-y-2">
-              <div className="text-2xl font-bold text-blue-800">
+            <div className={resultStyles.score}>
+              <div className={resultStyles.scoreNumber}>
                 正解数: {score}/{questions.length}
               </div>
-              <div className="text-lg text-blue-700">
+              <div className={resultStyles.scorePercentage}>
                 正答率: {Math.round((score / questions.length) * 100)}%
               </div>
             </div>

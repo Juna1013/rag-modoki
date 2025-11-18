@@ -1,5 +1,6 @@
 import Footer from './Footer';
 import type { QuizData } from '../utils/toonParser';
+import { baseStyles, headerStyles, tileStyles, utilityStyles } from '../styles/sharedStyles';
 
 interface DashboardProps {
   quizList: QuizData[];
@@ -38,24 +39,19 @@ const DashboardNew = ({ quizList, onStartQuiz, onNavigateToRagBot }: DashboardPr
   };
 
   const difficulties = ['基本', '中級', '上級', 'RAGボット'];
-  const difficultyColors = {
-    '基本': { bg: 'from-emerald-400 to-teal-500', border: 'border-emerald-500' },
-    '中級': { bg: 'from-amber-400 to-orange-500', border: 'border-amber-500' },
-    '上級': { bg: 'from-rose-400 to-pink-500', border: 'border-rose-500' },
-    'RAGボット': { bg: 'from-violet-400 to-purple-600', border: 'border-violet-500' }
-  };
+
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-gray-50 dark:bg-gray-900">
-      <div className="relative flex-grow flex flex-col items-center pt-8 sm:pt-12 md:pt-16 pb-6 sm:pb-8 md:pb-12 px-4 sm:px-6 lg:px-8">
-        <div className="dashboard-container w-full max-w-7xl">
+    <div className={baseStyles.appBackground}>
+      <div className={baseStyles.pageContainer}>
+        <div className={baseStyles.contentContainer}>
           {/* GitHub Link - Top Right */}
           <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30">
             <a
               href="https://github.com/Juna1013/gemini-quiz-app"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800/80 backdrop-blur-md rounded-full border border-gray-700/50 hover:bg-gray-800 hover:border-gray-600 transition-all duration-200 shadow-lg hover:shadow-xl"
+              className={utilityStyles.githubIcon}
               title="View on GitHub"
             >
               <svg
@@ -73,44 +69,36 @@ const DashboardNew = ({ quizList, onStartQuiz, onNavigateToRagBot }: DashboardPr
             </a>
           </div>
 
-          <header className="text-center mb-12 sm:mb-16 md:mb-20">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 leading-tight tracking-tight">
-              応用情報技術者試験
+          <header className={headerStyles.pageHeader}>
+            <h1 className={headerStyles.pageTitle}>
+              応用情報技術者試験 クイズ
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-3 sm:mb-4 font-medium">クイズダッシュボード</p>
-            <p className="text-sm sm:text-base md:text-lg text-gray-500 dark:text-gray-400 px-4 max-w-2xl mx-auto">💡 難易度タイルをタップして直接クイズに挑戦！</p>
+            <div className={headerStyles.pageSubtitle}>
+              <span>難易度を選んでクイズに挑戦しよう！</span>
+            </div>
           </header>
 
           <div className="mb-6 sm:mb-8">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center px-2 text-gray-900 dark:text-white">難易度を選択してクイズを開始</h2>
-            <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8 max-w-2xl mx-auto">
+            <div className={baseStyles.dashboardGrid}>
               {difficulties.map(difficulty => {
                 const questions = difficulty === 'RAGボット' ? [] : getDifficultyQuestions(difficulty);
-                const colors = difficultyColors[difficulty as keyof typeof difficultyColors];
+
 
                 return (
                   <div key={difficulty} className="relative group">
                     <div
-                      className="relative group cursor-pointer p-6 gap-4 flex flex-col bg-white/5 backdrop-blur-md border border-white/20 rounded-3xl transition-all duration-300 hover:bg-white/10 hover:border-white/30 shadow-2xl hover:shadow-3xl hover:scale-[1.02] backdrop-saturate-150"
+                      className={tileStyles.base}
                       onClick={() => handleStartQuiz(difficulty)}
-                      style={{
-                        boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
-                      }}
                     >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <div 
-                          className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl bg-gradient-to-br ${colors.bg} shadow-lg backdrop-blur-sm border border-white/30`}
-                          style={{
-                            boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.2), 0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                          }}
-                        >
+                      <div className={tileStyles.content}>
+                        <div className={tileStyles.info}>
+                          <div className={tileStyles.icon}>
                             {difficulty === 'RAGボット' ? '🤖' : 
                              difficulty === '基本' ? '📚' : 
                              difficulty === '中級' ? '⚙️' : '🏆'}
                           </div>
                           <div>
-                            <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                            <h3 className={tileStyles.title}>
                               {difficulty === 'RAGボット' ? (
                                 <>
                                   RAGボット
@@ -120,7 +108,7 @@ const DashboardNew = ({ quizList, onStartQuiz, onNavigateToRagBot }: DashboardPr
                                 `${difficulty}レベル`
                               )}
                             </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
+                            <p className={tileStyles.subtitle}>
                               {difficulty === '基本' ? '基礎固めに最適' : 
                                difficulty === '中級' ? '実践力を身につけよう' : 
                                difficulty === '上級' ? 'エキスパートレベル' :
@@ -128,19 +116,19 @@ const DashboardNew = ({ quizList, onStartQuiz, onNavigateToRagBot }: DashboardPr
                             </p>
                           </div>
                         </div>
-                        <div className="text-right">
+                        <div className={tileStyles.stats}>
                           {difficulty !== 'RAGボット' ? (
                             <>
-                              <div className="text-2xl font-bold text-gray-800 dark:text-white">{questions.length}</div>
-                              <div className="text-xs text-gray-500 dark:text-gray-400">問題</div>
+                              <div className={tileStyles.number}>{questions.length}</div>
+                              <div className={tileStyles.label}>問題</div>
                             </>
                           ) : (
-                            <div className="text-2xl text-purple-600">∞</div>
+                            <div className={tileStyles.number}>∞</div>
                           )}
                         </div>
                       </div>
 
-                      <div className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                      <div className={tileStyles.description}>
                         {difficulty === '基本' ? 'IT基礎知識・基本概念・用語理解を中心とした問題' : 
                          difficulty === '中級' ? 'アルゴリズム・設計・開発手法など実践的な技術問題' : 
                          difficulty === '上級' ? '高度なアーキテクチャ・最新技術・理論的な問題' :
