@@ -71,9 +71,7 @@ const Footer = () => {
                 <span>学習を継続しよう</span>
               </div>
               
-              <button className="text-sm text-blue-600 hover:text-blue-800 transition-colors">
-                GitHub
-              </button>
+
               
               <div className="flex items-center space-x-1 text-sm text-gray-500">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

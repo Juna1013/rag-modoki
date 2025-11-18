@@ -14,7 +14,9 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isAnswered, setIsAnswered] = useState(false);
   const [score, setScore] = useState(0);
-  const [answers, setAnswers] = useState<{questionId: number, selectedIndex: number, isCorrect: boolean}[]>([]);
+  const [_answers, setAnswers] = useState<{questionId: number, selectedIndex: number, isCorrect: boolean}[]>([]);
+  const [result, setResult] = useState<{isCorrect: boolean, correctChoice: string, explanation: string} | null>(null);
+  const [showFinalResult, setShowFinalResult] = useState(false);
 
   const currentQuiz = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
@@ -37,23 +39,27 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
 
     if (isCorrect) {
       setScore(prev => prev + 1);
-      alert(`正解！\n${currentQuiz.explanation}`);
-    } else {
-      alert(`不正解\n正解: ${correctChoice}\n${currentQuiz.explanation}`);
     }
+    
+    // 結果をページ下部に表示するための情報を設定
+    setResult({
+      isCorrect,
+      correctChoice,
+      explanation: currentQuiz.explanation
+    });
   };
 
   // 次の問題へ
   const showNextQuiz = () => {
     if (isLastQuestion) {
-      // 結果表示
-      const finalScore = score + (answers[answers.length - 1]?.isCorrect ? 1 : 0);
-      alert(`クイズ終了！\n\n正解数: ${finalScore}/${questions.length}\n正答率: ${Math.round((finalScore / questions.length) * 100)}%`);
+      // 最終結果表示
+      setShowFinalResult(true);
       return;
     }
     
     setCurrentQuestionIndex(prev => prev + 1);
     setIsAnswered(false);
+    setResult(null); // 結果表示をクリア
   };
 
   // リセット処理
@@ -62,6 +68,8 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
     setIsAnswered(false);
     setScore(0);
     setAnswers([]);
+    setResult(null);
+    setShowFinalResult(false);
   };
 
   if (!currentQuiz) {
@@ -82,25 +90,21 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
           {/* ヘッダー */}
           <header className="text-center mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0">
-              <Button 
-                variant="outlined" 
+              <button 
                 onClick={onBackToDashboard}
-                className="text-xs sm:text-sm order-2 sm:order-1"
-                size="small"
+                className="order-2 sm:order-1 px-4 py-2 bg-white/30 backdrop-blur-md border border-gray-300/50 rounded-xl text-xs sm:text-sm font-medium text-gray-800 hover:bg-white/40 hover:border-gray-400/60 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 ← ダッシュボード
-              </Button>
+              </button>
               <div className="text-base sm:text-lg md:text-xl font-semibold order-1 sm:order-2">
                 問題 {questionNumber}/{questions.length}
               </div>
-              <Button 
-                variant="outlined" 
+              <button 
                 onClick={resetQuiz}
-                className="text-xs sm:text-sm order-3"
-                size="small"
+                className="order-3 px-4 py-2 bg-white/30 backdrop-blur-md border border-gray-300/50 rounded-xl text-xs sm:text-sm font-medium text-gray-800 hover:bg-white/40 hover:border-gray-400/60 transition-all duration-300 shadow-lg hover:shadow-xl"
               >
                 リセット
-              </Button>
+              </button>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2 leading-tight">
               応用情報技術者試験 クイズ
@@ -137,8 +141,44 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
           disabled={isAnswered}
         />
         
+        {/* 回答結果表示 */}
+        {result && (
+          <div className={`mt-6 p-6 rounded-2xl shadow-lg ${result.isCorrect ? 'bg-green-50 border-2 border-green-200' : 'bg-red-50 border-2 border-red-200'}`}>
+            <div className={`text-xl font-bold mb-3 ${result.isCorrect ? 'text-green-700' : 'text-red-700'}`}>
+              {result.isCorrect ? '✓ 正解！' : '✗ 不正解'}
+            </div>
+            {!result.isCorrect && (
+              <div className="text-gray-700 mb-2">
+                <span className="font-semibold">正解: </span>
+                {result.correctChoice}
+              </div>
+            )}
+            <div className="text-gray-700">
+              <span className="font-semibold">解説: </span>
+              {result.explanation}
+            </div>
+          </div>
+        )}
+
+        {/* 最終結果表示 */}
+        {showFinalResult && (
+          <div className="mt-6 p-6 rounded-2xl shadow-lg bg-blue-50 border-2 border-blue-200">
+            <div className="text-xl font-bold mb-3 text-blue-700 text-center">
+              🎉 クイズ終了！
+            </div>
+            <div className="text-center space-y-2">
+              <div className="text-2xl font-bold text-blue-800">
+                正解数: {score}/{questions.length}
+              </div>
+              <div className="text-lg text-blue-700">
+                正答率: {Math.round((score / questions.length) * 100)}%
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* 次の問題へボタン */}
-          {isAnswered && (
+          {isAnswered && !showFinalResult && (
             <div className="text-center mt-6 sm:mt-8">
               <Button
                 variant="contained"
@@ -156,6 +196,35 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
               </Button>
             </div>
           )}
+
+        {/* ダッシュボードに戻るボタン（最終結果表示時） */}
+        {showFinalResult && (
+          <div className="text-center mt-6 sm:mt-8">
+            <Button
+              variant="contained"
+              size={window.innerWidth < 640 ? "medium" : "large"}
+              onClick={onBackToDashboard}
+              className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base mr-4"
+              sx={{
+                background: 'linear-gradient(45deg, #4CAF50 30%, #8BC34A 90%)',
+                minWidth: { xs: '120px', sm: 'auto' }
+              }}
+            >
+              ダッシュボードに戻る
+            </Button>
+            <Button
+              variant="outlined"
+              size={window.innerWidth < 640 ? "medium" : "large"}
+              onClick={resetQuiz}
+              className="px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-base"
+              sx={{
+                minWidth: { xs: '120px', sm: 'auto' }
+              }}
+            >
+              もう一度挑戦
+            </Button>
+          </div>
+        )}
         </div>
       </div>
       <Footer />

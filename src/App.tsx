@@ -2,15 +2,16 @@ import { useState, useEffect } from 'react';
 import './App.css'
 
 // コンポーネントのインポート
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/DashboardNew';
 import Quiz from './components/Quiz';
+import RagBotPage from './components/RagBotPage';
 import { parseTOON } from './utils/toonParser';
 import type { QuizData } from './utils/toonParser';
 import quizDataToon from './data/quizData.toon?raw';
 
 function App() {
     const [quizList, setQuizList] = useState<QuizData[]>([]);
-    const [currentView, setCurrentView] = useState<'dashboard' | 'quiz'>('dashboard');
+    const [currentView, setCurrentView] = useState<'dashboard' | 'quiz' | 'ragbot'>('dashboard');
     const [selectedQuestions, setSelectedQuestions] = useState<QuizData[]>([]);
 
     // TOON形式データをパース
@@ -25,6 +26,11 @@ function App() {
         setCurrentView('quiz');
     };
 
+    // RAGボットページに移動
+    const handleNavigateToRagBot = () => {
+        setCurrentView('ragbot');
+    };
+
     // ダッシュボードに戻る
     const handleBackToDashboard = () => {
         setCurrentView('dashboard');
@@ -37,6 +43,14 @@ function App() {
                 <Dashboard
                     quizList={quizList}
                     onStartQuiz={handleStartQuiz}
+                    onNavigateToRagBot={handleNavigateToRagBot}
+                />
+            )}
+            
+            {currentView === 'ragbot' && (
+                <RagBotPage
+                    onStartQuiz={handleStartQuiz}
+                    onBackToDashboard={handleBackToDashboard}
                 />
             )}
             
