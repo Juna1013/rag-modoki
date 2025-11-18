@@ -1,20 +1,65 @@
+// === 基本レベル（1-10問） ===
 [1]{question,choices[4],answer,explanation}:
-太陽はどれ？ | Sun,Moon,Mars,Earth | 0 | Sun が太陽です。
+2進数で10110を10進数に変換した値は？ | 22,24,26,28 | 0 | 2進数10110 = 1×16 + 0×8 + 1×4 + 1×2 + 0×1 = 22
 [2]{question,choices[4],answer,explanation}:
-ITILとは何か？ | ITサービス管理のフレームワーク,プログラミング言語,データベース,OS | 0 | ITILはITサービス管理のベストプラクティス集です。
+OSIモデルの第4層は何か？ | トランスポート層,ネットワーク層,セッション層,データリンク層 | 0 | OSI参照モデルの第4層はトランスポート層です。
 [3]{question,choices[4],answer,explanation}:
-PaaSの正式名称は？ | Platform as a Service,Product as a Service,Program as a Service,Performance as a Service | 0 | PaaSはPlatform as a Serviceの略です。
+IPアドレスのクラスAの範囲は？ | 1.0.0.0～126.255.255.255,128.0.0.0～191.255.255.255,192.0.0.0～223.255.255.255,224.0.0.0～239.255.255.255 | 0 | クラスAは1.0.0.0から126.255.255.255までの範囲です。
 [4]{question,choices[4],answer,explanation}:
-ブロックチェーンの特徴は？ | 分散型台帳技術,中央集権型DB,一時的データ保存,単一サーバー | 0 | ブロックチェーンは分散型台帳技術です。
+CPUの処理性能を表す単位は？ | MIPS,bps,Hz,dpi | 0 | MIPS（Million Instructions Per Second）はCPUの処理性能を表す単位です。
 [5]{question,choices[4],answer,explanation}:
-SCMとは？ | Supply Chain Management,Source Code Management,System Control Module,Security Certificate Manager | 0 | SCMはサプライチェーン管理を指します。
+ハードディスクの記憶容量の単位で、1TB は何GB？ | 1024,1000,512,2048 | 0 | 1TB = 1024GBです。
 [6]{question,choices[4],answer,explanation}:
-SLAとは？ | Service Level Agreement,Software License Agreement,System Load Average,Security Level Access | 0 | SLAはサービスレベル合意のことです。
+TCP/IPプロトコルスイートで、メール送信に使われるプロトコルは？ | SMTP,POP3,HTTP,FTP | 0 | SMTPはメール送信プロトコルです。
 [7]{question,choices[4],answer,explanation}:
-アジャイル開発の特徴は？ | 反復的な開発,ウォーターフォール,一度きりのリリース,長期計画のみ | 0 | アジャイルは反復的で柔軟な開発手法です。
+データベースで、主キーの役割は？ | 各レコードを一意に識別,データの暗号化,バックアップの作成,アクセス権の管理 | 0 | 主キーは各レコードを一意に識別するための属性です。
 [8]{question,choices[4],answer,explanation}:
-DDoS攻撃とは？ | 分散サービス拒否攻撃,データ削除攻撃,暗号化攻撃,物理的破壊 | 0 | DDoSは分散型のサービス拒否攻撃です。
+プログラムで、繰り返し処理を行う制御構造は？ | ループ,分岐,順次,関数 | 0 | ループ構造は繰り返し処理を実現します。
 [9]{question,choices[4],answer,explanation}:
-IoTの意味は？ | Internet of Things,Internet of Technology,Input Output Terminal,Integrated Online Tools | 0 | IoTはモノのインターネットを意味します。
+ファイアウォールの主な目的は？ | 不正アクセスの防止,データの圧縮,処理速度の向上,記憶容量の拡張 | 0 | ファイアウォールは不正アクセスを防止するセキュリティ機器です。
 [10]{question,choices[4],answer,explanation}:
-データベースの正規化の目的は？ | データの冗長性削減,データ量増加,処理速度低下,複雑化 | 0 | 正規化はデータの冗長性を削減します。
+HTMLで、ハイパーリンクを作成するタグは？ | <a>,<link>,<href>,<url> | 0 | <a>タグはハイパーリンクを作成するHTMLタグです。
+
+// === 中級レベル（11-20問） ===
+[11]{question,choices[4],answer,explanation}:
+クイックソートの平均的な計算量は？ | O(n log n),O(n²),O(n),O(log n) | 0 | クイックソートの平均計算量はO(n log n)です。
+[12]{question,choices[4],answer,explanation}:
+正規化の第3正規形の条件は？ | 推移関数従属性を排除,部分関数従属性を排除,多値従属性を排除,結合従属性を排除 | 0 | 第3正規形は推移関数従属性を排除した状態です。
+[13]{question,choices[4],answer,explanation}:
+RDBMS で、ACID特性のIは何を表す？ | 独立性（Isolation）,整合性（Integrity）,識別性（Identity）,不変性（Immutability） | 0 | ACIDのIは独立性（Isolation）を表します。
+[14]{question,choices[4],answer,explanation}:
+IPsecで使用される認証ヘッダのプロトコル番号は？ | 51,50,17,6 | 0 | AH（Authentication Header）のプロトコル番号は51です。
+[15]{question,choices[4],answer,explanation}:
+UMLで、クラス間の「is-a」関係を表す矢印は？ | 汎化,集約,コンポジション,依存 | 0 | 汎化は「is-a」関係（継承関係）を表します。
+[16]{question,choices[4],answer,explanation}:
+ソフトウェアテストの手法で、プログラムの内部構造を基にするものは？ | ホワイトボックステスト,ブラックボックステスト,グレーボックステスト,回帰テスト | 0 | ホワイトボックステストは内部構造を基にしたテスト手法です。
+[17]{question,choices[4],answer,explanation}:
+デッドロックの発生条件に含まれないものは？ | 時分割,相互排他,占有と待機,循環待機 | 0 | デッドロックの4つの発生条件に時分割は含まれません。
+[18]{question,choices[4],answer,explanation}:
+RSA暗号で使用される数学的問題は？ | 素因数分解問題,離散対数問題,楕円曲線問題,ナップサック問題 | 0 | RSA暗号は素因数分解問題の困難性に基づいています。
+[19]{question,choices[4],answer,explanation}:
+PMBOKで定義されているプロジェクト管理知識エリアは何個？ | 10個,9個,8個,12個 | 0 | PMBOKでは10の知識エリアが定義されています。
+[20]{question,choices[4],answer,explanation}:
+CMMIの成熟度レベルで最高レベルは？ | レベル5（最適化）,レベル4（定量管理）,レベル3（定義）,レベル6（革新） | 0 | CMMIの最高成熟度レベルは5（最適化）です。
+
+// === 上級レベル（21-30問） ===
+[21]{question,choices[4],answer,explanation}:
+ハフマン符号化の特徴として正しいものは？ | 前置符号の性質を持つ,固定長符号である,損失のある圧縮である,暗号化機能を持つ | 0 | ハフマン符号は前置符号（prefix code）の性質を持ちます。
+[22]{question,choices[4],answer,explanation}:
+BGPの経路選択で最も優先される属性は？ | Weight,Local Preference,AS Path,MED | 0 | BGPの経路選択ではWeightが最も高い優先度を持ちます。
+[23]{question,choices[4],answer,explanation}:
+MapReduceプログラミングモデルで、Shuffleフェーズの役割は？ | 中間結果のソートと転送,初期データの分割,最終結果のマージ,エラーハンドリング | 0 | Shuffleフェーズは中間結果をソートして適切なReducerに転送します。
+[24]{question,choices[4],answer,explanation}:
+CAP定理で、分散システムが同時に満たせない3つの特性は？ | 一貫性・可用性・分断耐性,機密性・完全性・可用性,原子性・一貫性・独立性,拡張性・可用性・性能 | 0 | CAP定理は一貫性（Consistency）、可用性（Availability）、分断耐性（Partition tolerance）を指します。
+[25]{question,choices[4],answer,explanation}:
+楕円曲線暗号（ECC）の利点は？ | 短い鍵長で高い安全性,処理速度が最高速,実装が最も簡単,量子攻撃に完全耐性 | 0 | ECCは短い鍵長で従来の暗号と同等の安全性を実現できます。
+[26]{question,choices[4],answer,explanation}:
+Dockerコンテナの特徴として正しくないものは？ | ハイパーバイザーが必要,軽量で高速起動,ポータビリティが高い,リソース効率が良い | 0 | Dockerコンテナはハイパーバイザーを必要としません。
+[27]{question,choices[4],answer,explanation}:
+ブロックチェーンの合意アルゴリズムProof of Stakeの特徴は？ | 保有量に基づく選出,計算能力による競争,ランダムな選択,投票による決定 | 0 | Proof of Stakeは暗号資産の保有量に基づいてバリデーターを選出します。
+[28]{question,choices[4],answer,explanation}:
+マイクロサービスアーキテクチャの課題として最も適切なものは？ | 分散システムの複雑性,単一障害点の存在,技術スタックの統一,データの非正規化 | 0 | マイクロサービスは分散システム特有の複雑性（ネットワーク遅延、部分的障害など）を伴います。
+[29]{question,choices[4],answer,explanation}:
+機械学習のバイアス・バリアンス分解で、バリアンスが高い状況は？ | 過学習,過少学習,正則化過多,データ不足 | 0 | 高バリアンスは過学習（overfitting）の状況を示します。
+[30]{question,choices[4],answer,explanation}:
+DevOpsの実践で、継続的デリバリー（CD）と継続的デプロイメント（CD）の違いは？ | デプロイの自動化レベル,テストの実行頻度,開発チームの規模,使用するツール | 0 | 継続的デリバリーは手動デプロイ、継続的デプロイメントは自動デプロイという自動化レベルの違いがあります。

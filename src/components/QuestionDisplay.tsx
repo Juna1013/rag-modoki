@@ -7,17 +7,22 @@ type Props = {
 };
 
 const QuestionDisplay = ({ questionText, isLoading, questionNumber }: Props) => (
-    // 問題文のコンテナ
-    // 生成中状態と問題文表示で異なる内容を表示
-    <div className="flex justify-center items-center w-3/4 mt-20 bg-[#f5aff] rounded-xl p-4 min-h-[120px] mb-4 border-2 border-[#1976d2] shadow-lg">
+    <div className="question-card w-full px-4 sm:px-6 lg:px-0">
         {isLoading ? (
-            <p className="text-lg">生成中...</p>
+            <div className="flex flex-col items-center justify-center py-6 sm:py-8">
+                <div className="animate-spin rounded-full h-8 w-8 sm:h-12 sm:w-12 border-b-2 border-indigo-600 mb-3 sm:mb-4"></div>
+                <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400">問題を読み込み中...</p>
+            </div>
         ) : (
-            <div className="text-lg w-full">
+            <div className="space-y-3 sm:space-y-4">
                 {questionNumber && (
-                    <div className="font-bold mb-2 text-[#1976d2]">問題 {questionNumber}</div>
+                    <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-xs sm:text-sm shadow-md">
+                        問題 {questionNumber}
+                    </div>
                 )}
-                <ReactMarkdown>{questionText}</ReactMarkdown>
+                <div className="text-base sm:text-lg lg:text-xl leading-relaxed text-gray-800 dark:text-gray-200 prose prose-sm sm:prose-base lg:prose-lg dark:prose-invert max-w-none">
+                    <ReactMarkdown>{questionText}</ReactMarkdown>
+                </div>
             </div>
         )}
     </div>

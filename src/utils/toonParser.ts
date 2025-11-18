@@ -14,6 +14,11 @@ export function parseTOON(toonText: string): QuizData[] {
     const line = lines[i].trim();
     if (!line) continue;
     
+    // コメント行をスキップ
+    if (line.startsWith('//')) {
+      continue;
+    }
+    
     // [id]{...}: の行をスキップ
     if (line.startsWith('[') && line.includes('{')) {
       continue;
@@ -48,4 +53,24 @@ export function parseTOON(toonText: string): QuizData[] {
   }
   
   return quizzes;
+}
+
+// 難易度別に問題を取得
+export function getQuestionsByDifficulty(quizzes: QuizData[], difficulty: 'basic' | 'intermediate' | 'advanced'): QuizData[] {
+  switch (difficulty) {
+    case 'basic':
+      return quizzes.filter(q => q.id >= 1 && q.id <= 10);
+    case 'intermediate':
+      return quizzes.filter(q => q.id >= 11 && q.id <= 20);
+    case 'advanced':
+      return quizzes.filter(q => q.id >= 21 && q.id <= 30);
+    default:
+      return [];
+  }
+}
+
+// ランダムに問題を選択
+export function getRandomQuestions(questions: QuizData[], count: number = 5): QuizData[] {
+  const shuffled = [...questions].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, Math.min(count, questions.length));
 }
