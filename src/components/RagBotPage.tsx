@@ -27,7 +27,7 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
                 <span>ダッシュボードに戻る</span>
               </button>
             </div>
-            
+
             <div className="text-center">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight">
                 🤖 RAGボット
@@ -45,7 +45,7 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
 
           {/* メインコンテンツエリア */}
           <div className={cardStyles.main}>
-            <div className="p-6 sm:p-8 md:p-10">
+            <div className="p-4 sm:p-6">
               <RagBot onStartQuiz={onStartQuiz} />
             </div>
           </div>

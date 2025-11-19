@@ -44,23 +44,23 @@ const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigate
           </header>
 
           {/* コンテンツセクション */}
-          <div className="grid grid-cols-1 gap-6">
+          <div className={baseStyles.dashboardGrid}>
             {/* サイバーセキュリティ */}
             <button
               onClick={() => onNavigateToContent('サイバーセキュリティ')}
-              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+              className="text-left bg-gradient-to-br from-blue-500 to-cyan-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
                   🔒
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                <h2 className="text-lg sm:text-xl font-bold text-white">
                   2025年度の
                   <br />
                   サイバーセキュリティ事案
                 </h2>
               </div>
-              <p className="text-sm text-black">
+              <p className="text-sm text-white/90 font-medium">
                 最新のセキュリティ脅威と対策について詳しく解説します。
               </p>
             </button>
@@ -68,19 +68,19 @@ const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigate
             {/* クラウド比較 */}
             <button
               onClick={() => onNavigateToContent('クラウド比較')}
-              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+              className="text-left bg-gradient-to-br from-purple-500 to-indigo-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
                   ☁️
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                <h2 className="text-lg sm:text-xl font-bold text-white">
                   クラウドと
                   <br />
                   オンプレミス比較
                 </h2>
               </div>
-              <p className="text-sm text-black">
+              <p className="text-sm text-white/90 font-medium">
                 システム導入時の重要な検討項目を比較解説。
               </p>
             </button>
@@ -88,19 +88,19 @@ const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigate
             {/* RAGの解説 */}
             <button
               onClick={() => onNavigateToContent('RAGの解説')}
-              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+              className="text-left bg-gradient-to-br from-green-500 to-emerald-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
                   🤖
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                <h2 className="text-lg sm:text-xl font-bold text-white">
                   RAG
                   <br />
                   の解説
                 </h2>
               </div>
-              <p className="text-sm text-black">
+              <p className="text-sm text-white/90 font-medium">
                 検索拡張生成技術について詳しく学べます。
               </p>
             </button>
@@ -108,19 +108,19 @@ const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigate
             {/* 紙アンケートのOpenCVによるスキャン */}
             <button
               onClick={() => onNavigateToContent('紙アンケートのOpenCVによるスキャン')}
-              className="text-left bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group"
+              className="text-left bg-gradient-to-br from-orange-500 to-amber-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
                   📱
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                <h2 className="text-lg sm:text-xl font-bold text-white">
                   紙アンケートの
                   <br />
                   OpenCV処理
                 </h2>
               </div>
-              <p className="text-sm text-black">
+              <p className="text-sm text-white/90 font-medium">
                 画像処理による自動化技術を解説します。
               </p>
             </button>
@@ -128,19 +128,19 @@ const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigate
             {/* RAGボット - ナビゲーションタイル */}
             <button
               onClick={onNavigateToRagBot}
-              className="w-full bg-white rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-shadow duration-300 group text-left"
+              className="w-full bg-gradient-to-br from-pink-500 to-rose-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group text-left transform hover:-translate-y-1 sm:col-span-2 lg:col-span-2"
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-gray-100 rounded-2xl flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
                   ✨
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-black group-hover:text-blue-600 transition-colors">
+                <h2 className="text-lg sm:text-xl font-bold text-white">
                   RAG による
                   <br />
                   クイズレコメンド
                 </h2>
               </div>
-              <p className="text-sm text-black">
+              <p className="text-sm text-white/90 font-medium">
                 希望するトピックから最適な問題を AI が選択します。
               </p>
             </button>

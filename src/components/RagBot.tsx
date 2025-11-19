@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { parseTOON, type QuizData } from '../utils/toonParser';
 import quizRaw from '../data/quizData.toon?raw';
 
@@ -6,19 +6,38 @@ interface RagBotProps {
   onStartQuiz?: (questions: QuizData[]) => void;
 }
 
+interface Message {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  questions?: QuizData[];
+}
+
 const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
   const quizzes: QuizData[] = parseTOON(quizRaw as string);
   const advanced = quizzes.filter(q => q.id >= 21 && q.id <= 30);
 
   const [query, setQuery] = useState('');
-  const [messages, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'welcome',
+      role: 'assistant',
+      content: 'こんにちは！RAGボットです。\n希望するトピックやキーワードを教えてください。\n(例: ネットワーク、データベース、セキュリティ)'
+    }
+  ]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   function retrieveRelevant(userQuery: string, maxDocs = 5) {
     // 全問題から検索（基本・中級・上級すべて）
     const allQuestions = quizzes;
-    
+
     if (!userQuery.trim()) {
       return [...advanced].sort(() => Math.random() - 0.5).slice(0, maxDocs);
     }
@@ -55,7 +74,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
     const scored = allQuestions.map(q => {
       const text = (q.question + ' ' + q.explanation + ' ' + q.choices.join(' ')).toLowerCase();
       let score = 0;
-      
+
       // 完全一致チェック（高スコア）
       [...expandedTerms].forEach(term => {
         const termLower = term.toLowerCase();
@@ -76,7 +95,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
 
     scored.sort((a, b) => b.score - a.score);
     const selected = scored.filter(s => s.score > 0).map(s => s.q);
-    
+
     if (selected.length >= maxDocs) {
       return selected.slice(0, maxDocs);
     }
@@ -85,143 +104,157 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
     const remaining = [...advanced]
       .filter(a => !selected.includes(a))
       .sort(() => Math.random() - 0.5);
-    
+
     return selected.concat(remaining.slice(0, Math.max(0, maxDocs - selected.length)));
   }
 
-  function handleGenerate() {
-    setError(null);
+  const handleSend = async () => {
+    if (!query.trim() || loading) return;
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      content: query
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setQuery('');
     setLoading(true);
 
+    // Simulate network delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 800));
+
     try {
-      // toonファイルから希望に沿った問題を選択
-      const selectedQuestions = retrieveRelevant(query, 5);
-      
+      const selectedQuestions = retrieveRelevant(userMessage.content, 5);
+
       if (selectedQuestions.length === 0) {
-        throw new Error('条件に合う問題が見つかりませんでした。キーワードを変更してお試しください。');
+        setMessages(prev => [...prev, {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: '申し訳ありません。条件に合う問題が見つかりませんでした。\n別のキーワードで試してみてください。'
+        }]);
+      } else {
+        const formattedResults = selectedQuestions.map((q) =>
+          `・${q.question.substring(0, 40)}...`
+        ).join('\n');
+
+        setMessages(prev => [...prev, {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: `「${userMessage.content}」に関連する問題を${selectedQuestions.length}問見つけました！\n\n${formattedResults}\n\nこの問題セットでクイズを開始しますか？`,
+          questions: selectedQuestions
+        }]);
       }
-
-      // 選択された問題を表示用にフォーマット
-      const formattedResults = selectedQuestions.map((q, index) => 
-        `【問題 ${index + 1}】\n${q.question}\n\n選択肢:\n${q.choices.map((choice, i) => `${i + 1}. ${choice}`).join('\n')}\n\n正解: ${q.answer + 1}番\n解説: ${q.explanation}\n`
-      ).join('\n' + '='.repeat(50) + '\n\n');
-
-      setMessages([`選択された問題 (${selectedQuestions.length}問):\n\n${formattedResults}`]);
-
-      // クイズを開始
-      if (onStartQuiz) {
-        // 少し遅延させてユーザーが選択結果を確認できるようにする
-        setTimeout(() => {
-          onStartQuiz(selectedQuestions);
-        }, 1500);
-      }
-    } catch (e: any) {
-      setError(e?.message || String(e));
+    } catch (e) {
+      setMessages(prev => [...prev, {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: 'エラーが発生しました。もう一度お試しください。'
+      }]);
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
 
   return (
-    <div className="space-y-6">
-      {/* 説明文 */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <div className="flex items-start space-x-3">
-          <div className="w-5 h-5 mt-0.5 flex-shrink-0">
-            <svg className="text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </div>
-          <div>
-            <div className="text-blue-800 text-sm font-medium mb-1">RAG による問題選択システム</div>
-            <div className="text-blue-700 text-xs leading-relaxed">
-              希望するトピックやキーワードを入力すると、既存の問題データベースから関連する5問を検索・選択してクイズを開始できます。
-            </div>
-          </div>
+    <div className="flex flex-col h-[calc(100vh-200px)] sm:h-[600px] min-h-[400px] bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+      {/* Chat Header */}
+      <div className="bg-white border-b border-gray-200 p-4 flex items-center gap-3">
+        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center text-white text-xl shadow-sm">
+          🤖
         </div>
-      </div>
-
-      {/* 入力エリア */}
-      <div className="space-y-4">
         <div>
-          <label className="block text-gray-700 text-sm font-medium mb-2">
-            希望するトピック・キーワード
-          </label>
-          <textarea
-            className="w-full rounded-md border border-gray-300 p-3 text-gray-900 placeholder-gray-500 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            rows={3}
-            value={query}
-            onChange={e => setQuery(e.target.value)}
-            placeholder="例: ネットワーク、データベース、セキュリティ、暗号化、アルゴリズム、TCP/IP、BGP、ハフマン符号化"
-          />
-          <div className="mt-1 text-xs text-gray-500">
-            空白の場合は上級レベルからランダムに5問を選択します
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-3">
-          <button
-            onClick={handleGenerate}
-            disabled={loading}
-            className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-          >
-            {loading ? (
-              <>
-                <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="m4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span>問題選択中...</span>
-              </>
-            ) : (
-              <>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-                <span>5問を選択してクイズ開始</span>
-              </>
-            )}
-          </button>
-          
-          <button
-            onClick={() => { setQuery(''); setMessages([]); setError(null); }}
-            className="bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-center space-x-2"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-            </svg>
-            <span>リセット</span>
-          </button>
+          <h3 className="font-bold text-gray-800">RAG Quiz Bot</h3>
+          <p className="text-xs text-gray-500 flex items-center gap-1">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            Online
+          </p>
         </div>
       </div>
 
-      {/* 結果表示エリア */}
-      {(error || messages.length > 0) && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="text-blue-800 font-medium mb-3 flex items-center">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            選択結果
-          </h4>          {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-3">
-              <div className="text-red-700 text-sm font-medium flex items-center">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                </svg>
-                エラーが発生しました
+      {/* Messages Area */}
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth"
+      >
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            <div
+              className={`max-w-[80%] rounded-2xl p-4 shadow-sm ${msg.role === 'user'
+                ? 'bg-blue-600 text-white rounded-br-none'
+                : 'bg-white text-gray-800 border border-gray-100 rounded-bl-none'
+                }`}
+            >
+              <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed">
+                {msg.content}
+              </pre>
+
+              {msg.questions && onStartQuiz && (
+                <div className="mt-4 pt-3 border-t border-gray-100">
+                  <button
+                    onClick={() => onStartQuiz(msg.questions!)}
+                    className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-2 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm"
+                  >
+                    <span>クイズを開始する</span>
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+
+        {loading && (
+          <div className="flex justify-start">
+            <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-none p-4 shadow-sm">
+              <div className="flex gap-1">
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
               </div>
-              <div className="text-red-600 text-xs mt-1">{error}</div>
             </div>
-          )}
-          
-          {messages.map((m, i) => (
-            <div key={i} className="bg-white border border-blue-200 rounded-lg p-3 mt-2">
-              <pre className="whitespace-pre-wrap text-gray-800 text-xs sm:text-sm font-mono leading-relaxed overflow-auto max-h-60">{m}</pre>
-            </div>
-          ))}
+          </div>
+        )}
+      </div>
+
+      {/* Input Area */}
+      <div className="bg-white p-4 border-t border-gray-200">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="トピックを入力..."
+            className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+            disabled={loading}
+          />
+          <button
+            onClick={handleSend}
+            disabled={!query.trim() || loading}
+            className="bg-blue-600 hover:bg-blue-700 text-white rounded-xl px-6 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+            </svg>
+          </button>
         </div>
-      )}
+        <p className="text-center text-xs text-gray-400 mt-2">
+          AIが最適な問題を検索して提案します
+        </p>
+      </div>
     </div>
   );
 };

@@ -5,15 +5,15 @@
 // ベース背景とレイアウト
 export const baseStyles = {
   appBackground: 'min-h-screen w-full flex flex-col bg-gradient-to-br from-sky-100 via-blue-200 to-cyan-300',
-  pageContainer: 'flex-grow flex flex-col items-center pt-4 sm:pt-6 md:pt-12 pb-2 sm:pb-2 md:pb-2 px-4 sm:px-6 lg:px-8',
+  pageContainer: 'flex-grow flex flex-col items-center pt-4 sm:pt-6 md:pt-12 pb-6 px-3 sm:px-6 lg:px-8',
   contentContainer: 'w-full max-w-6xl',
-  dashboardGrid: 'grid grid-cols-1 gap-4 sm:gap-6 lg:gap-8 max-w-2xl mx-auto'
+  dashboardGrid: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto'
 };
 
 // ヘッダーコンポーネント
 export const headerStyles = {
   pageHeader: 'text-center mb-6 sm:mb-8',
-  pageTitle: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2 leading-tight',
+  pageTitle: 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent mb-2 leading-tight',
   pageSubtitle: 'flex flex-col sm:flex-row justify-center items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-600',
   quizHeaderControls: 'flex flex-col sm:flex-row justify-between items-center mb-4 space-y-2 sm:space-y-0',
   quizProgress: 'text-base sm:text-lg md:text-xl font-semibold order-1 sm:order-2'
@@ -56,21 +56,21 @@ export const cardStyles = {
 export const choiceStyles = {
   container: 'mt-6 sm:mt-8 w-full px-4 sm:px-6 lg:px-0 max-w-5xl mx-auto',
   grid: 'grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4',
-  tile: 'relative group cursor-pointer transition-all duration-300 transform rounded-xl bg-black hover:bg-gray-800',
-  content: 'relative p-4 sm:p-6 min-h-[90px] sm:min-h-[110px] flex items-center overflow-hidden',
-  number: 'relative flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4 sm:mr-5 transition-all duration-300',
+  tile: 'relative group cursor-pointer transition-all duration-300 transform rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 hover:shadow-lg hover:-translate-y-0.5',
+  content: 'relative p-3 sm:p-4 md:p-6 min-h-[80px] sm:min-h-[110px] flex items-center overflow-hidden',
+  number: 'relative flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mr-4 sm:mr-5 transition-all duration-300 group-hover:bg-white/30',
   numberText: 'text-white font-bold text-sm sm:text-lg',
   textContainer: 'relative flex-grow pr-2',
   text: 'text-white text-sm sm:text-base lg:text-lg leading-relaxed font-semibold',
   indicator: 'relative flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all duration-300 ml-3',
-  indicatorIcon: 'w-8 h-8 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center'
+  indicatorIcon: 'w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center'
 };
 
 // 問題表示スタイル
 export const questionStyles = {
   container: 'w-full px-4 sm:px-6 lg:px-0 max-w-5xl mx-auto',
   content: 'space-y-3 sm:space-y-4',
-  badge: 'inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold text-xs sm:text-sm',
+  badge: 'inline-block px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-bold text-xs sm:text-sm',
   text: 'text-base sm:text-lg lg:text-xl leading-relaxed text-gray-800 prose prose-sm sm:prose-base lg:prose-lg max-w-none'
 };
 
@@ -111,5 +111,5 @@ export const animationStyles = {
 // ユーティリティスタイル
 export const utilityStyles = {
   githubIcon: 'absolute top-4 right-4 sm:top-6 sm:right-6 z-30 group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800/80 backdrop-blur-md rounded-full hover:bg-gray-800 transition-all duration-200',
-  gradientText: 'bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent'
+  gradientText: 'bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent'
 };
