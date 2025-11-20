@@ -1,0 +1,10 @@
+// アルゴリズム・データ構造分野のクイズ
+
+[8]{question,choices[4],answer,explanation}:
+プログラムで、繰り返し処理を行う制御構造は？ | ループ,分岐,順次,関数 | 0 | ループ構造は繰り返し処理を実現します。
+
+[11]{question,choices[4],answer,explanation}:
+クイックソートの平均的な計算量は？ | O(n log n),O(n²),O(n),O(log n) | 0 | クイックソートの平均計算量はO(n log n)です。
+
+[21]{question,choices[4],answer,explanation}:
+ハフマン符号化の特徴として正しいものは？ | 前置符号の性質を持つ,固定長符号である,損失のある圧縮である,暗号化機能を持つ | 0 | ハフマン符号は前置符号（prefix code）の性質を持ちます。

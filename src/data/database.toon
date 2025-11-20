@@ -1,0 +1,10 @@
+// データベース分野のクイズ
+
+[7]{question,choices[4],answer,explanation}:
+データベースで、主キーの役割は？ | 各レコードを一意に識別,データの暗号化,バックアップの作成,アクセス権の管理 | 0 | 主キーは各レコードを一意に識別するための属性です。
+
+[12]{question,choices[4],answer,explanation}:
+正規化の第3正規形の条件は？ | 推移関数従属性を排除,部分関数従属性を排除,多値従属性を排除,結合従属性を排除 | 0 | 第3正規形は推移関数従属性を排除した状態です。
+
+[13]{question,choices[4],answer,explanation}:
+RDBMS で、ACID特性のIは何を表す？ | 独立性（Isolation）,整合性（Integrity）,識別性（Identity）,不変性（Immutability） | 0 | ACIDのIは独立性（Isolation）を表します。

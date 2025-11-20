@@ -1,0 +1,19 @@
+// 基礎理論・ハードウェア・その他の分野のクイズ
+
+[1]{question,choices[4],answer,explanation}:
+2進数で10110を10進数に変換した値は？ | 22,24,26,28 | 0 | 2進数10110 = 1×16 + 0×8 + 1×4 + 1×2 + 0×1 = 22
+
+[4]{question,choices[4],answer,explanation}:
+CPUの処理性能を表す単位は？ | MIPS,bps,Hz,dpi | 0 | MIPS（Million Instructions Per Second）はCPUの処理性能を表す単位です。
+
+[5]{question,choices[4],answer,explanation}:
+ハードディスクの記憶容量の単位で、1TB は何GB？ | 1024,1000,512,2048 | 0 | 1TB = 1024GBです。
+
+[10]{question,choices[4],answer,explanation}:
+HTMLで、ハイパーリンクを作成するタグは？ | <a>,<link>,<href>,<url> | 0 | <a>タグはハイパーリンクを作成するHTMLタグです。
+
+[17]{question,choices[4],answer,explanation}:
+デッドロックの発生条件に含まれないものは？ | 時分割,相互排他,占有と待機,循環待機 | 0 | デッドロックの4つの発生条件に時分割は含まれません。
+
+[29]{question,choices[4],answer,explanation}:
+機械学習のバイアス・バリアンス分解で、バリアンスが高い状況は？ | 過学習,過少学習,正則化過多,データ不足 | 0 | 高バリアンスは過学習（overfitting）の状況を示します。

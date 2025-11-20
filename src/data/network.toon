@@ -1,0 +1,13 @@
+// ネットワーク分野のクイズ
+
+[2]{question,choices[4],answer,explanation}:
+OSIモデルの第4層は何か？ | トランスポート層,ネットワーク層,セッション層,データリンク層 | 0 | OSI参照モデルの第4層はトランスポート層です。
+
+[3]{question,choices[4],answer,explanation}:
+IPアドレスのクラスAの範囲は？ | 1.0.0.0～126.255.255.255,128.0.0.0～191.255.255.255,192.0.0.0～223.255.255.255,224.0.0.0～239.255.255.255 | 0 | クラスAは1.0.0.0から126.255.255.255までの範囲です。
+
+[6]{question,choices[4],answer,explanation}:
+TCP/IPプロトコルスイートで、メール送信に使われるプロトコルは？ | SMTP,POP3,HTTP,FTP | 0 | SMTPはメール送信プロトコルです。
+
+[22]{question,choices[4],answer,explanation}:
+BGPの経路選択で最も優先される属性は？ | Weight,Local Preference,AS Path,MED | 0 | BGPの経路選択ではWeightが最も高い優先度を持ちます。

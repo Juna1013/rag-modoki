@@ -1,0 +1,13 @@
+// セキュリティ分野のクイズ
+
+[9]{question,choices[4],answer,explanation}:
+ファイアウォールの主な目的は？ | 不正アクセスの防止,データの圧縮,処理速度の向上,記憶容量の拡張 | 0 | ファイアウォールは不正アクセスを防止するセキュリティ機器です。
+
+[14]{question,choices[4],answer,explanation}:
+IPsecで使用される認証ヘッダのプロトコル番号は？ | 51,50,17,6 | 0 | AH（Authentication Header）のプロトコル番号は51です。
+
+[18]{question,choices[4],answer,explanation}:
+RSA暗号で使用される数学的問題は？ | 素因数分解問題,離散対数問題,楕円曲線問題,ナップサック問題 | 0 | RSA暗号は素因数分解問題の困難性に基づいています。
+
+[25]{question,choices[4],answer,explanation}:
+楕円曲線暗号（ECC）の利点は？ | 短い鍵長で高い安全性,処理速度が最高速,実装が最も簡単,量子攻撃に完全耐性 | 0 | ECCは短い鍵長で従来の暗号と同等の安全性を実現できます。
