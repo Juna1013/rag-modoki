@@ -40,26 +40,25 @@ function App() {
         <div className="App">
             {currentView === 'dashboard' && (
                 <Dashboard
-                    onStartQuiz={handleStartQuiz}
                     onNavigateToRagBot={handleNavigateToRagBot}
                     onNavigateToContent={handleNavigateToContent}
                 />
             )}
-            
+
             {currentView === 'ragbot' && (
                 <RagBotPage
                     onStartQuiz={handleStartQuiz}
                     onBackToDashboard={handleBackToDashboard}
                 />
             )}
-            
+
             {currentView === 'content' && (
                 <ContentPage
                     title={contentType}
                     onBackToDashboard={handleBackToDashboard}
                 />
             )}
-            
+
             {currentView === 'quiz' && selectedQuestions.length > 0 && (
                 <Quiz
                     questions={selectedQuestions}
