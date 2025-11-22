@@ -32,14 +32,9 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight">
                 🤖 RAGボット
               </h1>
-              <div className="flex items-center justify-center space-x-2 mb-4">
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
-                  AI問題選択システム
-                </span>
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-cyan-100 text-cyan-700">
-                  カスタマイズ出題
-                </span>
-              </div>
+              <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">
+                AIと対話しながら、あなたに最適な問題を選んで出題します
+              </p>
             </div>
           </header>
 
