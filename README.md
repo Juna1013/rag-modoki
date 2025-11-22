@@ -1,45 +1,200 @@
-# toon-app
+# 🎓 Gemini Quiz App
 
-## プロジェクト概要
+Google Gemini APIを活用したAI搭載クイズ学習アプリケーション
 
-このプロジェクトは、Google Gemini APIを活用したインタラクティブなクイズアプリケーションです。
-ユーザーはクイズを通じて知識を確認できるほか、RAG（検索拡張生成）技術を用いたチャットボット機能により、関連情報について深く学習することができます。
-モダンなUI/UXデザインを採用し、直感的で魅力的な学習体験を提供します。
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=white)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-## 技術スタック
+## ✨ 特徴
 
-### コアフレームワーク & ビルドツール
-- **React (v19)**: UIライブラリ
-- **TypeScript**: 静的型付け
-- **Vite**: 高速なビルドツール・開発サーバー
+- 🤖 **AI会話型問題選択（RAGボット）**: Gemini APIによる自然な対話で最適な問題を提案
+- 📚 **多様な出題モード**: 基本・中級・上級・ランダム・カスタマイズ
+- 💬 **ChatGPT風UI**: モダンで使いやすいチャットインターフェース
+- 📝 **Markdown対応**: コードブロックを含む問題を美しく表示
+- 📱 **レスポンシブデザイン**: モバイルからデスクトップまで完全対応
 
-### UI & スタイリング
-- **Material UI (MUI)**: UIコンポーネントライブラリ
-- **Tailwind CSS**: ユーティリティファーストCSS
-- **Emotion**: CSS-in-JS (MUI依存)
+## 🚀 クイックスタート
 
-### 機能・その他
-- **Google GenAI SDK**: 生成AI機能 (Gemini)
-- **React Markdown**: Markdownレンダリング
-- **React Syntax Highlighter**: コードハイライト
+### 前提条件
+- Node.js 18以上
+- npm 9以上
 
-### 開発ツール
-- **ESLint**: コード品質チェック
+### インストール
 
-## Gemini RAG Bot (環境変数設定)
+```bash
+# リポジトリをクローン
+git clone https://github.com/Juna1013/toon-app.git
+cd toon-app
 
-このアプリの RAG ボット機能は外部の Gemini（もしくは類似の生成 API）を呼び出します。ローカルで動作させるにはプロジェクトルートに `.env` ファイルを作成し、以下の環境変数を追加してください（Vite を使用しているため先頭に `VITE_` を付けます）。
+# 依存関係をインストール
+npm install
 
+# 環境変数を設定
+cp .env.example .env
+# .env ファイルを編集してAPI keyを設定
 ```
-VITE_GEMINI_API_URL=https://your-gemini-endpoint.example/v1/generate
-VITE_GEMINI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+### 環境変数
+
+`.env` ファイルを作成し、以下を設定：
+
+```bash
+VITE_GEMINI_KEY=your_gemini_api_key_here
 ```
 
-注: 実際の Gemini のエンドポイント/リクエスト形式はプロバイダーによって異なります。`src/components/RagBot.tsx` の fetch 呼び出しは汎用的な JSON body (`{ prompt, max_tokens, temperature }`) を送信します。必要に応じてエンドポイントに合わせて調整してください。
+Gemini APIキーの取得: [Google AI Studio](https://makersuite.google.com/app/apikey)
 
-開発サーバーを再起動して環境変数を反映してください:
+### 開発サーバー起動
 
 ```bash
 npm run dev
 ```
 
+ブラウザで http://localhost:5173/ を開く
+
+## 📁 プロジェクト構造
+
+```
+toon-app/
+├── src/
+│   ├── components/     # Reactコンポーネント
+│   ├── utils/          # ユーティリティ関数
+│   ├── data/           # 問題データ
+│   ├── styles/         # 共通スタイル
+│   └── App.tsx         # メインアプリ
+├── docs/               # ドキュメント
+├── public/             # 静的ファイル
+└── README.md           # このファイル
+```
+
+## 📖 ドキュメント
+
+詳細なドキュメントは `docs/` ディレクトリにあります：
+
+- 📋 [プロジェクト概要](./docs/overview.md) - プロジェクトの目的と特徴
+- 🛠️ [セットアップガイド](./docs/setup.md) - 詳細なインストール手順
+- ✨ [機能説明](./docs/features.md) - アプリケーションの主要機能
+- 🤖 [RAGボットガイド](./docs/rag-bot.md) - AI会話型問題選択の詳細
+- 🔌 [APIドキュメント](./docs/api.md) - Gemini API統合
+- 🏗️ [アーキテクチャ](./docs/architecture.md) - システム構成と設計
+- 👨‍💻 [開発ガイド](./docs/development.md) - 開発者向けガイド
+
+## 🎯 主な機能
+
+### 🤖 RAGボット
+
+自然な対話を通じて最適な問題を検索・提案するAI powered 機能：
+
+```
+ユーザー: ネットワークについて勉強したい
+ボット: ネットワークに関連する問題を5問見つけました！
+       1. TCPとUDPの違いについて...
+       2. OSI参照モデルの7層...
+       ...
+       この問題セットでクイズを開始しますか？
+```
+
+### 📝 クイズモード
+
+- **基本問題**: 初級レベル（問題1-10）
+- **中級問題**: 標準レベル（問題11-20）
+- **上級問題**: 高度な問題（問題21-30）
+- **ランダム**: 全レベルからランダム出題
+
+### 💡 学習支援
+
+- 選択式問題（4択）
+- 即時フィードバック
+- 詳細な解説
+- スコア管理
+
+## 🛠 技術スタック
+
+### コア
+- **React 19** - UIライブラリ
+- **TypeScript** - 型安全性
+- **Vite** - 高速ビルドツール
+
+### スタイリング
+- **Tailwind CSS** - ユーティリティファースト
+- **Material UI** - UIコンポーネント
+- **Emotion** - CSS-in-JS
+
+### AI/機能
+- **Google Gemini API** - AI会話
+- **react-markdown** - Markdown描画
+- **react-syntax-highlighter** - コードハイライト
+
+## 🧪 スクリプト
+
+```bash
+# 開発サーバー
+npm run dev
+
+# プロダクションビルド
+npm run build
+
+# プレビュー
+npm run preview
+
+# リント
+npm run lint
+```
+
+## 📦 ビルド
+
+```bash
+npm run build
+```
+
+ビルドされたファイルは `dist/` ディレクトリに出力されます。
+
+## 🌐 デプロイ
+
+### Vercel (推奨)
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+
+環境変数 `VITE_GEMINI_KEY` を設定してください。
+
+### Netlify
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start)
+
+ビルドコマンド: `npm run build`
+公開ディレクトリ: `dist`
+
+## 🤝 コントリビューション
+
+貢献を歓迎します！
+
+1. このリポジトリをフォーク
+2. 新しいブランチを作成 (`git checkout -b feature/amazing-feature`)
+3. 変更をコミット (`git commit -m 'Add some amazing feature'`)
+4. ブランチにプッシュ (`git push origin feature/amazing-feature`)
+5. プルリクエストを作成
+
+## 📄 ライセンス
+
+このプロジェクトはMITライセンスの下で公開されています。
+
+## 🙏 謝辞
+
+- [Google Gemini](https://ai.google.dev/) - AI機能の提供
+- [React](https://reactjs.org/) - UIフレームワーク
+- [Tailwind CSS](https://tailwindcss.com/) - スタイリング
+- すべてのオープンソースコントリビューター
+
+## 📞 サポート
+
+質問や問題がある場合は：
+
+1. [ドキュメント](./docs/README.md)を確認
+2. [Issue](https://github.com/Juna1013/toon-app/issues) を作成
+3. [プルリクエスト](https://github.com/Juna1013/toon-app/pulls) でコントリビュート
+
+---
+
+Made with ❤️ by [Juna1013](https://github.com/Juna1013)
