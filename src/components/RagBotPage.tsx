@@ -2,7 +2,7 @@ import React from 'react';
 import Footer from './Footer';
 import RagBot from './RagBot';
 import type { QuizData } from '../utils/toonParser';
-import { baseStyles, headerStyles, buttonStyles, cardStyles } from '../styles/sharedStyles';
+import { baseStyles, headerStyles, buttonStyles } from '../styles/sharedStyles';
 
 interface RagBotPageProps {
   onStartQuiz: (selectedQuestions: QuizData[]) => void;
@@ -39,11 +39,7 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
           </header>
 
           {/* メインコンテンツエリア */}
-          <div className={cardStyles.main}>
-            <div className="p-4 sm:p-6">
-              <RagBot onStartQuiz={onStartQuiz} />
-            </div>
-          </div>
+          <RagBot onStartQuiz={onStartQuiz} />
         </div>
       </div>
       <Footer />
