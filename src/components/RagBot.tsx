@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { parseTOON, type QuizData } from '../utils/toonParser';
+import { callGeminiAPI } from '../utils/gemini';
 import quizRaw from '../data/quizData.toon?raw';
 
 interface RagBotProps {
@@ -22,7 +23,7 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
     {
       id: 'welcome',
       role: 'assistant',
-      content: 'こんにちは！RAGボットです。\n希望するトピックやキーワードを教えてください。\n(例: ネットワーク、データベース、セキュリティ)'
+      content: 'こんにちは！RAGボットです😊\n\n学びたいトピックを教えてください。\n会話しながら最適な問題を選びます！\n\n💡 例：「ネットワーク」「簡単なデータベース」「セキュリティ10問」\n❓ 使い方が分からない時は「ヘルプ」と入力してください'
     }
   ]);
   const [loading, setLoading] = useState(false);
@@ -108,6 +109,19 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
     return selected.concat(remaining.slice(0, Math.max(0, maxDocs - selected.length)));
   }
 
+
+  // 難易度に応じた問題フィルタリング
+  const filterByDifficulty = (questions: QuizData[], difficulty: string): QuizData[] => {
+    if (difficulty === 'basic') {
+      return questions.filter(q => q.id >= 1 && q.id <= 10);
+    } else if (difficulty === 'intermediate') {
+      return questions.filter(q => q.id >= 11 && q.id <= 20);
+    } else if (difficulty === 'advanced') {
+      return questions.filter(q => q.id >= 21 && q.id <= 30);
+    }
+    return questions;
+  };
+
   const handleSend = async () => {
     if (!query.trim() || loading) return;
 
@@ -118,34 +132,162 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const userInput = query;
     setQuery('');
     setLoading(true);
 
-    // Simulate network delay for better UX
-    await new Promise(resolve => setTimeout(resolve, 800));
-
     try {
-      const selectedQuestions = retrieveRelevant(userMessage.content, 5);
+      // 簡易的なパターンマッチングによるフォールバック
+      const input = userInput.toLowerCase().trim();
+      let shouldUseGemini = true;
+      let fallbackResponse = '';
+      let searchQuery = userInput;
+      let maxResults = 5;
+      let difficulty: string = 'all';
 
-      if (selectedQuestions.length === 0) {
-        setMessages(prev => [...prev, {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: '申し訳ありません。条件に合う問題が見つかりませんでした。\n別のキーワードで試してみてください。'
-        }]);
+      // 挨拶パターン
+      if (/^(こんにちは|こんばんは|おはよう|はじめまして|よろしく|hello|hi)/.test(input)) {
+        fallbackResponse = 'こんにちは！😊\nどのようなトピックの問題に挑戦したいですか？';
+        shouldUseGemini = false;
+      }
+      // ありがとうパターン
+      else if (/^(ありがとう|あり|thanks)/.test(input)) {
+        fallbackResponse = 'どういたしまして！✨\n他に気になるトピックがあれば教えてください。';
+        shouldUseGemini = false;
+      }
+      // 数量の抽出
+      const numberMatch = input.match(/(\d+)(問|個|つ)/);
+      if (numberMatch) {
+        maxResults = Math.min(Math.max(parseInt(numberMatch[1]), 1), 10);
+      }
+
+      // Gemini APIを試行
+      let aiResponse = '';
+      if (shouldUseGemini) {
+        try {
+          const availableTopics = Array.from(new Set(
+            quizzes.map(q => {
+              const topics = [];
+              if (q.question.toLowerCase().includes('ネットワーク') || q.question.toLowerCase().includes('tcp') || q.question.toLowerCase().includes('ip')) topics.push('ネットワーク');
+              if (q.question.toLowerCase().includes('データベース') || q.question.toLowerCase().includes('sql')) topics.push('データベース');
+              if (q.question.toLowerCase().includes('セキュリティ') || q.question.toLowerCase().includes('暗号')) topics.push('セキュリティ');
+              if (q.question.toLowerCase().includes('アルゴリズム') || q.question.toLowerCase().includes('ソート')) topics.push('アルゴリズム');
+              return topics;
+            }).flat()
+          )).join('、');
+
+          const conversationHistory = messages
+            .slice(-4)
+            .map(m => `${m.role === 'user' ? 'ユーザー' : 'アシスタント'}: ${m.content}`)
+            .join('\n');
+
+          const prompt = `あなたはクイズ学習アシスタントです。
+
+【利用可能なトピック】${availableTopics}
+
+【会話履歴】
+${conversationHistory}
+ユーザー: ${userInput}
+
+【指示】
+1. 100文字以内で簡潔に応答
+2. 問題を提案する場合:
+   SEARCH_QUERY: <検索キーワード>
+   MAX_RESULTS: <1-10>
+   DIFFICULTY: <basic|intermediate|advanced|all>
+
+応答:`;
+
+          aiResponse = await callGeminiAPI(prompt);
+        } catch (apiError) {
+          console.warn('Gemini API failed, using fallback:', apiError);
+          // Gemini APIが失敗した場合、フォールバック
+          aiResponse = '';
+        }
+      }
+
+      // AIの応答またはフォールバックを使用
+      const responseToUse = aiResponse || fallbackResponse;
+
+      if (!responseToUse) {
+        // デフォルト: 問題検索を実行
+        let selectedQuestions = retrieveRelevant(searchQuery, maxResults);
+
+        if (selectedQuestions.length === 0) {
+          setMessages(prev => [...prev, {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: '申し訳ありません。条件に合う問題が見つかりませんでした。😅\n\n別のトピックを試してみてください。'
+          }]);
+        } else {
+          const formattedResults = selectedQuestions.map((q, index) =>
+            `${index + 1}. ${q.question.substring(0, 45)}...`
+          ).join('\n');
+
+          const responseText = `「${userInput}」に関連する問題を${selectedQuestions.length}問見つけました！✨\n\n${formattedResults}\n\nこの問題セットでクイズを開始しますか？`;
+
+          setMessages(prev => [...prev, {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: responseText,
+            questions: selectedQuestions
+          }]);
+        }
       } else {
-        const formattedResults = selectedQuestions.map((q) =>
-          `・${q.question.substring(0, 40)}...`
-        ).join('\n');
+        // AI応答から検索パラメータを抽出
+        const searchMatch = responseToUse.match(/SEARCH_QUERY:\s*(.+)/);
+        const maxResultsMatch = responseToUse.match(/MAX_RESULTS:\s*(\d+)/);
+        const difficultyMatch = responseToUse.match(/DIFFICULTY:\s*(basic|intermediate|advanced|all)/);
 
-        setMessages(prev => [...prev, {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: `「${userMessage.content}」に関連する問題を${selectedQuestions.length}問見つけました！\n\n${formattedResults}\n\nこの問題セットでクイズを開始しますか？`,
-          questions: selectedQuestions
-        }]);
+        let cleanResponse = responseToUse
+          .replace(/SEARCH_QUERY:.+/g, '')
+          .replace(/MAX_RESULTS:.+/g, '')
+          .replace(/DIFFICULTY:.+/g, '')
+          .trim();
+
+        // 問題検索が必要な場合
+        if (searchMatch) {
+          searchQuery = searchMatch[1].trim();
+          maxResults = maxResultsMatch ? Math.min(parseInt(maxResultsMatch[1]), 10) : maxResults;
+          difficulty = difficultyMatch ? difficultyMatch[1] : 'all';
+
+          let selectedQuestions = retrieveRelevant(searchQuery, maxResults);
+
+          if (difficulty !== 'all') {
+            selectedQuestions = filterByDifficulty(selectedQuestions, difficulty);
+          }
+
+          if (selectedQuestions.length === 0) {
+            setMessages(prev => [...prev, {
+              id: (Date.now() + 1).toString(),
+              role: 'assistant',
+              content: cleanResponse || '問題が見つかりませんでした。別のトピックを試してください。'
+            }]);
+          } else {
+            const formattedResults = selectedQuestions.map((q, index) =>
+              `${index + 1}. ${q.question.substring(0, 45)}...`
+            ).join('\n');
+
+            const responseText = `${cleanResponse}\n\n見つかった問題：\n${formattedResults}\n\nクイズを開始しますか？`;
+
+            setMessages(prev => [...prev, {
+              id: (Date.now() + 1).toString(),
+              role: 'assistant',
+              content: responseText,
+              questions: selectedQuestions
+            }]);
+          }
+        } else {
+          // 会話のみ
+          setMessages(prev => [...prev, {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: cleanResponse
+          }]);
+        }
       }
     } catch (e) {
+      console.error('Error:', e);
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
