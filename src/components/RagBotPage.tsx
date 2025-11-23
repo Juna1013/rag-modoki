@@ -11,7 +11,7 @@ interface RagBotPageProps {
 
 const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard }) => {
   return (
-    <div className={baseStyles.appBackground}>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       <div className={baseStyles.pageContainer}>
         <div className="w-full max-w-4xl">
           {/* ヘッダー */}
@@ -29,7 +29,7 @@ const RagBotPage: React.FC<RagBotPageProps> = ({ onStartQuiz, onBackToDashboard 
             </div>
 
             <div className="text-center">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mb-3 leading-tight">
                 🤖 RAGボット
               </h1>
               <p className="text-gray-600 text-sm sm:text-base max-w-2xl mx-auto">

@@ -85,7 +85,7 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
   }
 
   return (
-    <div className={baseStyles.appBackground}>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-indigo-50">
       <div className={baseStyles.pageContainer}>
         <div className={baseStyles.contentContainer}>
           {/* ヘッダー */}
@@ -107,7 +107,7 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
                 リセット
               </button>
             </div>
-            <h1 className={headerStyles.pageTitle}>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mb-2 leading-tight">
               応用情報技術者試験 クイズ
             </h1>
             <div className={headerStyles.pageSubtitle}>

@@ -1,5 +1,6 @@
 import React from 'react';
 import Footer from './Footer';
+import NavigationBar from './NavigationBar';
 import { baseStyles } from '../styles/sharedStyles';
 
 interface DashboardProps {
@@ -10,15 +11,20 @@ interface DashboardProps {
 const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigateToContent }) => {
   return (
     <div className={baseStyles.appBackground}>
-      <div className={baseStyles.pageContainer}>
-        <div className={baseStyles.contentContainer}>
-          {/* ヘッダー */}
-          <header className="mb-8 sm:mb-12 text-center">
+      <NavigationBar
+        currentView="home"
+        onNavigateToRagBot={onNavigateToRagBot}
+        onNavigateToContent={onNavigateToContent}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50">
+        <div className={baseStyles.pageContainer}>
+          <div className={baseStyles.contentContainer}>
+            {/* GitHubアイコン */}
             <a
               href="https://github.com/Juna1013/gemini-quiz-app"
               target="_blank"
               rel="noopener noreferrer"
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 z-30 group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-full hover:bg-gray-900 transition-all duration-200"
+              className="fixed top-4 right-4 sm:top-6 sm:right-6 z-[60] group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-full hover:bg-gray-900 transition-all duration-200 shadow-lg"
               title="GitHubで表示"
             >
               <svg
@@ -35,120 +41,139 @@ const DashboardNew: React.FC<DashboardProps> = ({ onNavigateToRagBot, onNavigate
               </svg>
             </a>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-400 bg-clip-text text-transparent mb-3 leading-tight">
-              応用情報技術者試験 クイズ
-            </h1>
-            <p className="text-gray-600 text-base sm:text-lg md:text-xl">
-              AIが希望するテーマから最適な問題を出題
-            </p>
-          </header>
-
-          {/* コンテンツセクション */}
-          <div className={baseStyles.dashboardGrid}>
-            {/* サイバーセキュリティ */}
-            <button
-              onClick={() => onNavigateToContent('サイバーセキュリティ')}
-              className="text-left bg-gradient-to-br from-blue-500 to-cyan-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
-                  🔒
+            {/* コンテンツセクション */}
+            <div className="flex flex-col gap-6 max-w-3xl mx-auto py-24">
+              {/* タイトルタイル */}
+              <div className="bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-400 rounded-[2rem] p-8 sm:p-12 shadow-xl relative">
+                <div className="relative z-10 text-center space-y-4">
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center text-4xl shadow-lg">
+                      🎓
+                    </div>
+                  </div>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white leading-tight tracking-wide">
+                    茨城高専<br className="sm:hidden" />
+                    <span className="block mt-2">メディア・デザイン・ラボ</span>
+                  </h1>
+                  <p className="text-white/95 text-lg sm:text-xl font-medium max-w-xl mx-auto leading-relaxed">
+                    最新のセキュリティ事案からAIを用いた業務効率化まで
+                  </p>
                 </div>
-                <h2 className="text-lg sm:text-xl font-bold text-white">
-                  2025年度の
-                  <br />
-                  サイバーセキュリティ事案
-                </h2>
               </div>
-              <p className="text-sm text-white/90 font-medium">
-                最新のセキュリティ脅威と対策について詳しく解説します。
-              </p>
-            </button>
 
-            {/* クラウド比較 */}
-            <button
-              onClick={() => onNavigateToContent('クラウド比較')}
-              className="text-left bg-gradient-to-br from-purple-500 to-indigo-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
-                  ☁️
-                </div>
-                <h2 className="text-lg sm:text-xl font-bold text-white">
-                  クラウドと
-                  <br />
-                  オンプレミス比較
-                </h2>
-              </div>
-              <p className="text-sm text-white/90 font-medium">
-                システム導入時の重要な検討項目を比較解説。
-              </p>
-            </button>
+              {/* コンテンツグリッド */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* サイバーセキュリティ */}
+                <button
+                  onClick={() => onNavigateToContent('サイバーセキュリティ')}
+                  className="group bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-cyan-50 rounded-[2rem] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 text-left overflow-hidden relative"
+                >
+                  <div className="relative z-10 space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-2xl flex items-center justify-center text-3xl shadow-md">
+                        🔒
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">
+                        2025年度の<br />
+                        サイバーセキュリティ事案
+                      </h2>
+                    </div>
+                    <p className="text-gray-700 text-sm sm:text-base font-medium leading-relaxed">
+                      最新のセキュリティ脅威と対策について詳しく解説します。
+                    </p>
+                  </div>
+                </button>
 
-            {/* RAGの解説 */}
-            <button
-              onClick={() => onNavigateToContent('RAGの解説')}
-              className="text-left bg-gradient-to-br from-green-500 to-emerald-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
-                  🤖
-                </div>
-                <h2 className="text-lg sm:text-xl font-bold text-white">
-                  RAG
-                  <br />
-                  の解説
-                </h2>
-              </div>
-              <p className="text-sm text-white/90 font-medium">
-                検索拡張生成技術について詳しく学べます。
-              </p>
-            </button>
+                {/* クラウド比較 */}
+                <button
+                  onClick={() => onNavigateToContent('クラウド比較')}
+                  className="group bg-white hover:bg-gradient-to-br hover:from-purple-50 hover:to-indigo-50 rounded-[2rem] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 text-left overflow-hidden relative"
+                >
+                  <div className="relative z-10 space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl flex items-center justify-center text-3xl shadow-md">
+                        ☁️
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                        クラウドと<br />
+                        オンプレミス比較
+                      </h2>
+                    </div>
+                    <p className="text-gray-700 text-sm sm:text-base font-medium leading-relaxed">
+                      システム導入時の重要な検討項目を比較解説。
+                    </p>
+                  </div>
+                </button>
 
-            {/* 紙アンケートのOpenCVによるスキャン */}
-            <button
-              onClick={() => onNavigateToContent('紙アンケートのOpenCVによるスキャン')}
-              className="text-left bg-gradient-to-br from-orange-500 to-amber-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group transform hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
-                  📱
-                </div>
-                <h2 className="text-lg sm:text-xl font-bold text-white">
-                  紙アンケートの
-                  <br />
-                  OpenCV処理
-                </h2>
-              </div>
-              <p className="text-sm text-white/90 font-medium">
-                画像処理による自動化技術を解説します。
-              </p>
-            </button>
+                {/* RAGの解説 */}
+                <button
+                  onClick={() => onNavigateToContent('RAGの解説')}
+                  className="group bg-white hover:bg-gradient-to-br hover:from-green-50 hover:to-emerald-50 rounded-[2rem] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 text-left overflow-hidden relative"
+                >
+                  <div className="relative z-10 space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center text-3xl shadow-md">
+                        🤖
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                        RAG<br />
+                        の解説
+                      </h2>
+                    </div>
+                    <p className="text-gray-700 text-sm sm:text-base font-medium leading-relaxed">
+                      検索拡張生成技術について詳しく学べます。
+                    </p>
+                  </div>
+                </button>
 
-            {/* RAGボット - ナビゲーションタイル */}
-            <button
-              onClick={onNavigateToRagBot}
-              className="w-full bg-gradient-to-br from-pink-500 to-rose-400 rounded-3xl p-6 sm:p-8 hover:shadow-lg transition-all duration-300 group text-left transform hover:-translate-y-1 sm:col-span-2 lg:col-span-2"
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl">
-                  ✨
-                </div>
-                <h2 className="text-lg sm:text-xl font-bold text-white">
-                  RAG による
-                  <br />
-                  クイズレコメンド
-                </h2>
+                {/* 紙アンケートのOpenCVによるスキャン */}
+                <button
+                  onClick={() => onNavigateToContent('紙アンケートのOpenCVによるスキャン')}
+                  className="group bg-white hover:bg-gradient-to-br hover:from-orange-50 hover:to-amber-50 rounded-[2rem] p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 text-left overflow-hidden relative"
+                >
+                  <div className="relative z-10 space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 bg-gradient-to-br from-orange-100 to-amber-100 rounded-2xl flex items-center justify-center text-3xl shadow-md">
+                        📱
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                        紙アンケートの<br />
+                        OpenCV処理
+                      </h2>
+                    </div>
+                    <p className="text-gray-700 text-sm sm:text-base font-medium leading-relaxed">
+                      画像処理による自動化技術を解説します。
+                    </p>
+                  </div>
+                </button>
               </div>
-              <p className="text-sm text-white/90 font-medium">
-                希望するトピックから最適な問題を AI が選択します。
-              </p>
-            </button>
-          </div>
-        </div>
-      </div>
+
+              {/* RAGボット - 全幅タイル */}
+              <button
+                onClick={onNavigateToRagBot}
+                className="group bg-gradient-to-br from-pink-400 via-rose-400 to-red-400 hover:from-pink-500 hover:via-rose-500 hover:to-red-500 rounded-[2rem] p-8 sm:p-12 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 text-left overflow-hidden relative"
+              >
+                <div className="relative z-10 space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-white/30 backdrop-blur-md rounded-2xl flex items-center justify-center text-4xl shadow-lg">
+                      ✨
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                      RAG による<br />
+                      クイズレコメンド
+                    </h2>
+                  </div>
+                  <p className="text-white/95 text-base sm:text-lg font-medium max-w-2xl leading-relaxed">
+                    希望するトピックから最適な問題を AI が選択します。
+                  </p>
+                </div>
+              </button>
+            </div>
+          </div >
+        </div >
+      </div >
       <Footer />
-    </div>
+    </div >
   );
 };
 
