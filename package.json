@@ -1,8 +1,24 @@
 {
-  "name": "my-vite-app",
+  "name": "toon-app",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "応用情報技術者試験のクイズアプリ - AI支援学習ツール",
+  "author": "juna1013",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/juna1013/gemini-quiz-app.git"
+  },
+  "keywords": [
+    "quiz",
+    "learning",
+    "it-certification",
+    "ai",
+    "react",
+    "vite",
+    "typescript"
+  ],
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
