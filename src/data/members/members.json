@@ -11,16 +11,16 @@
         },
         {
             "id": "2",
-            "name": "メンバー2",
+            "name": "佐藤匠",
             "year": "3年生",
             "major": "電気・電子系",
-            "role": "OpenCVを用いた紙アンケートの管理",
-            "comment": "-",
+            "role": "HandyScan（OpenCVを用いた紙アンケートの管理）",
+            "comment": "AIのクレジットもっとください",
             "avatar": "/members/member2.jpg"
         },
         {
             "id": "3",
-            "name": "メンバー3",
+            "name": "渡辺日彩",
             "year": "2年生",
             "major": "電気・電子系",
             "role": "オンプレミス・クラウドの比較",
@@ -29,7 +29,7 @@
         },
         {
             "id": "4",
-            "name": "メンバー4",
+            "name": "井村元紀",
             "year": "2年生",
             "major": "情報系",
             "role": "セキュリティ・RAG（検索拡張生成）",
@@ -38,11 +38,11 @@
         },
         {
             "id": "5",
-            "name": "メンバー5",
+            "name": "西川優花",
             "year": "1年生",
             "major": "国際創造工学科",
             "role": "サイバーセキュリティ事例",
-            "comment": "-",
+            "comment": "やる気と倦怠期です",
             "avatar": "/members/member5.png"
         }
     ]
