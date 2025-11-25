@@ -91,7 +91,7 @@ const MemberIntro: React.FC<MemberIntroProps> = ({
                                             <div className="relative z-10 flex gap-5">
                                                 {/* Large Avatar on Left */}
                                                 <div className="flex-shrink-0">
-                                                    <div className={`w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-gradient-to-br ${color} flex items-center justify-center shadow-lg overflow-hidden group-hover:scale-105 transition-transform duration-300`}>
+                                                    <div className={`w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br ${color} flex items-center justify-center shadow-lg overflow-hidden group-hover:scale-105 transition-transform duration-300`}>
                                                         {!hasError ? (
                                                             <img
                                                                 src={member.avatar}

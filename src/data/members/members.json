@@ -7,7 +7,7 @@
             "major": "機械・制御系 制御コース",
             "role": "RAG（検索拡張生成）",
             "comment": "インフル許さない",
-            "avatar": "/members/kawasaki.png"
+            "avatar": "/members/member1.png"
         },
         {
             "id": "2",
@@ -15,8 +15,8 @@
             "year": "3年生",
             "major": "電気・電子系",
             "role": "OpenCVを用いた紙アンケートの管理",
-            "comment": "よろしくお願いします",
-            "avatar": "/members/member2.png"
+            "comment": "-",
+            "avatar": "/members/member2.jpg"
         },
         {
             "id": "3",
@@ -24,7 +24,7 @@
             "year": "2年生",
             "major": "電気・電子系",
             "role": "オンプレミス・クラウドの比較",
-            "comment": "がんばります！",
+            "comment": "-",
             "avatar": "/members/member3.png"
         },
         {
@@ -32,8 +32,8 @@
             "name": "メンバー4",
             "year": "2年生",
             "major": "情報系",
-            "role": "デザイン",
-            "comment": "セキュリティ・RAG（検索拡張生成）",
+            "role": "セキュリティ・RAG（検索拡張生成）",
+            "comment": "-",
             "avatar": "/members/member4.png"
         },
         {
@@ -42,7 +42,7 @@
             "year": "1年生",
             "major": "国際創造工学科",
             "role": "サイバーセキュリティ事例",
-            "comment": "安定稼働を目指します",
+            "comment": "-",
             "avatar": "/members/member5.png"
         }
     ]
