@@ -53,6 +53,22 @@
             "hoverColor": "hover:from-orange-50 hover:to-amber-50"
         },
         {
+            "id": "members",
+            "title": "メンバー紹介",
+            "description": "プロジェクトメンバーの紹介です。",
+            "icon": "👥",
+            "keywords": [
+                "メンバー",
+                "チーム",
+                "紹介",
+                "プロフィール"
+            ],
+            "type": "members",
+            "gradient": "from-teal-600 to-cyan-600",
+            "bgGradient": "from-teal-100 to-cyan-100",
+            "hoverColor": "hover:from-teal-50 hover:to-cyan-50"
+        },
+        {
             "id": "rag",
             "title": "RAGの解説",
             "description": "検索拡張生成技術について詳しく学べます。",

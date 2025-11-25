@@ -7,6 +7,7 @@ import contentData from '../../data/dashboard/contentTiles.json';
 interface DashboardProps {
   onNavigateToRagBot: () => void;
   onNavigateToContent: (type: string) => void;
+  onNavigateToMembers: () => void;
 }
 
 interface ContentTile {
@@ -25,7 +26,8 @@ interface ContentTile {
 
 const DashboardNew: React.FC<DashboardProps> = ({
   onNavigateToRagBot,
-  onNavigateToContent
+  onNavigateToContent,
+  onNavigateToMembers
 }) => {
 
   // JSONデータからコンテンツタイルを作成し、actionを追加
@@ -33,7 +35,9 @@ const DashboardNew: React.FC<DashboardProps> = ({
     ...tile,
     action: tile.type === 'ragbot'
       ? onNavigateToRagBot
-      : () => onNavigateToContent(tile.contentType!)
+      : tile.type === 'members'
+        ? onNavigateToMembers
+        : () => onNavigateToContent(tile.contentType!)
   }));
 
   return (

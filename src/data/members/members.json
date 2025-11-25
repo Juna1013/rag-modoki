@@ -1,0 +1,49 @@
+{
+    "members": [
+        {
+            "id": "1",
+            "name": "川崎准也",
+            "year": "4年生",
+            "major": "機械・制御系 制御コース",
+            "role": "RAG（検索拡張生成）",
+            "comment": "インフル許さない",
+            "avatar": "/members/kawasaki.png"
+        },
+        {
+            "id": "2",
+            "name": "メンバー2",
+            "year": "3年生",
+            "major": "電気・電子系",
+            "role": "OpenCVを用いた紙アンケートの管理",
+            "comment": "よろしくお願いします",
+            "avatar": "/members/member2.png"
+        },
+        {
+            "id": "3",
+            "name": "メンバー3",
+            "year": "2年生",
+            "major": "電気・電子系",
+            "role": "オンプレミス・クラウドの比較",
+            "comment": "がんばります！",
+            "avatar": "/members/member3.png"
+        },
+        {
+            "id": "4",
+            "name": "メンバー4",
+            "year": "2年生",
+            "major": "情報系",
+            "role": "デザイン",
+            "comment": "セキュリティ・RAG（検索拡張生成）",
+            "avatar": "/members/member4.png"
+        },
+        {
+            "id": "5",
+            "name": "メンバー5",
+            "year": "1年生",
+            "major": "国際創造工学科",
+            "role": "サイバーセキュリティ事例",
+            "comment": "安定稼働を目指します",
+            "avatar": "/members/member5.png"
+        }
+    ]
+}

@@ -29,7 +29,7 @@ interface Document {
 
 const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
   const quizzes: QuizData[] = parseTOON(quizRaw as string);
-  const advanced = quizzes.filter(q => q.id >= 21 && q.id <= 30);
+  const advanced = quizzes.filter(q => q.id >= 67 && q.id <= 100);
 
   // ドキュメントデータベースの構築
   const documents: Document[] = [
@@ -189,11 +189,11 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
   // 難易度に応じた問題フィルタリング
   const filterByDifficulty = (questions: QuizData[], difficulty: string): QuizData[] => {
     if (difficulty === 'basic') {
-      return questions.filter(q => q.id >= 1 && q.id <= 10);
+      return questions.filter(q => q.id >= 1 && q.id <= 33);
     } else if (difficulty === 'intermediate') {
-      return questions.filter(q => q.id >= 11 && q.id <= 20);
+      return questions.filter(q => q.id >= 34 && q.id <= 66);
     } else if (difficulty === 'advanced') {
-      return questions.filter(q => q.id >= 21 && q.id <= 30);
+      return questions.filter(q => q.id >= 67 && q.id <= 100);
     }
     return questions;
   };

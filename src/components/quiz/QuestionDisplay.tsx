@@ -1,5 +1,5 @@
 import ReactMarkdown from "react-markdown";
-import { questionStyles, animationStyles } from '../styles/sharedStyles';
+import { questionStyles, animationStyles } from '../../styles/sharedStyles';
 
 type Props = {
     questionText: string;

@@ -7,10 +7,11 @@ import Dashboard from './components/dashboard/DashboardNew';
 import Quiz from './components/quiz/Quiz';
 import RagBotPage from './components/ragbot/RagBotPage';
 import ContentPage from './components/content/ContentPage';
+import MemberIntro from './components/members/MemberIntro';
 import type { QuizData } from './utils/toonParser';
 
 function App() {
-    const [currentView, setCurrentView] = useState<'dashboard' | 'quiz' | 'ragbot' | 'content'>('dashboard');
+    const [currentView, setCurrentView] = useState<'dashboard' | 'quiz' | 'ragbot' | 'content' | 'members'>('dashboard');
     const [selectedQuestions, setSelectedQuestions] = useState<QuizData[]>([]);
     const [contentType, setContentType] = useState<string>('');
 
@@ -31,6 +32,11 @@ function App() {
         setCurrentView('content');
     };
 
+    // メンバー紹介へ移動
+    const handleNavigateToMembers = () => {
+        setCurrentView('members');
+    };
+
     // ダッシュボードに戻る
     const handleBackToDashboard = () => {
         setCurrentView('dashboard');
@@ -45,6 +51,7 @@ function App() {
                 <Dashboard
                     onNavigateToRagBot={handleNavigateToRagBot}
                     onNavigateToContent={handleNavigateToContent}
+                    onNavigateToMembers={handleNavigateToMembers}
                 />
             )}
 
@@ -64,6 +71,14 @@ function App() {
                     onNavigateToRagBot={handleNavigateToRagBot}
                     onNavigateToContent={handleNavigateToContent}
                     currentView={currentView}
+                />
+            )}
+
+            {currentView === 'members' && (
+                <MemberIntro
+                    onBackToDashboard={handleBackToDashboard}
+                    onNavigateToRagBot={handleNavigateToRagBot}
+                    onNavigateToContent={handleNavigateToContent}
                 />
             )}
 

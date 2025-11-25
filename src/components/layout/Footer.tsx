@@ -1,4 +1,4 @@
-import { footerStyles } from '../styles/sharedStyles';
+import { footerStyles } from '../../styles/sharedStyles';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
