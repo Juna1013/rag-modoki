@@ -2,9 +2,9 @@ import { useState } from 'react';
 import QuestionDisplay from './QuestionDisplay';
 import ChoiceButtons from './ChoiceButtons';
 import Button from "@mui/material/Button";
-import Footer from './Footer';
-import type { QuizData } from '../utils/toonParser';
-import { baseStyles, headerStyles, buttonStyles, resultStyles } from '../styles/sharedStyles';
+import Footer from '../layout/Footer';
+import type { QuizData } from '../../utils/toonParser';
+import { baseStyles, headerStyles, buttonStyles, resultStyles } from '../../styles/sharedStyles';
 
 interface QuizProps {
   questions: QuizData[];

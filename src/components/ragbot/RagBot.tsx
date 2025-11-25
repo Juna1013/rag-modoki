@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { parseTOON, type QuizData } from '../utils/toonParser';
-import { callGeminiAPI } from '../utils/gemini';
-import quizRaw from '../data/quizData.toon?raw';
+import { parseTOON, type QuizData } from '../../utils/toonParser';
+import { callGeminiAPI } from '../../utils/gemini';
+import quizRaw from '../../data/quiz/quizData.toon?raw';
 
 // Markdownコンテンツのインポート
-import cybersecurityMd from '../content/cybersecurity.md?raw';
-import cloudComparisonMd from '../content/cloud-comparison.md?raw';
-import ragExplanationMd from '../content/rag-explanation.md?raw';
-import opencvScanMd from '../content/opencv-scan.md?raw';
+import cybersecurityMd from '../../content/cybersecurity.md?raw';
+import cloudComparisonMd from '../../content/cloud-comparison.md?raw';
+import ragExplanationMd from '../../content/rag-explanation.md?raw';
+import opencvScanMd from '../../content/opencv-scan.md?raw';
 
 interface RagBotProps {
   onStartQuiz?: (questions: QuizData[]) => void;
@@ -453,8 +453,8 @@ ${conversationHistory}
               <div className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
                 <div
                   className={`px-5 py-3.5 rounded-2xl shadow-sm text-sm sm:text-base leading-relaxed ${msg.role === 'user'
-                      ? 'bg-gray-900 text-white rounded-tr-sm'
-                      : 'bg-gray-50 text-gray-800 border border-gray-100 rounded-tl-sm'
+                    ? 'bg-gray-900 text-white rounded-tr-sm'
+                    : 'bg-gray-50 text-gray-800 border border-gray-100 rounded-tl-sm'
                     }`}
                 >
                   <pre className="whitespace-pre-wrap font-sans bg-transparent border-none p-0 m-0 overflow-x-auto max-w-full">

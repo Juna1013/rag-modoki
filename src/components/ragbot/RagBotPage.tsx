@@ -1,9 +1,9 @@
 import React from 'react';
-import Footer from './Footer';
-import NavigationBar from './NavigationBar';
+import Footer from '../layout/Footer';
+import NavigationBar from '../layout/NavigationBar';
 import RagBot from './RagBot';
-import type { QuizData } from '../utils/toonParser';
-import { baseStyles, headerStyles } from '../styles/sharedStyles';
+import type { QuizData } from '../../utils/toonParser';
+import { baseStyles, headerStyles } from '../../styles/sharedStyles';
 
 interface RagBotPageProps {
   onStartQuiz: (selectedQuestions: QuizData[]) => void;

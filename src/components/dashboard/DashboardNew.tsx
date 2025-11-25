@@ -1,8 +1,8 @@
 import React from 'react';
-import Footer from './Footer';
-import NavigationBar from './NavigationBar';
-import { baseStyles } from '../styles/sharedStyles';
-import contentData from '../data/contentTiles.json';
+import Footer from '../layout/Footer';
+import NavigationBar from '../layout/NavigationBar';
+import { baseStyles } from '../../styles/sharedStyles';
+import contentData from '../../data/dashboard/contentTiles.json';
 
 interface DashboardProps {
   onNavigateToRagBot: () => void;

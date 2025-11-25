@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import contentData from '../data/contentTiles.json';
+import contentData from '../../data/dashboard/contentTiles.json';
 
 interface NavigationBarProps {
     currentView?: string;

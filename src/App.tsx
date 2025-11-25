@@ -2,10 +2,11 @@ import { useState } from 'react';
 import './App.css'
 
 // コンポーネントのインポート
-import Dashboard from './components/DashboardNew';
-import Quiz from './components/Quiz';
-import RagBotPage from './components/RagBotPage';
-import ContentPage from './components/ContentPage';
+// コンポーネントのインポート
+import Dashboard from './components/dashboard/DashboardNew';
+import Quiz from './components/quiz/Quiz';
+import RagBotPage from './components/ragbot/RagBotPage';
+import ContentPage from './components/content/ContentPage';
 import type { QuizData } from './utils/toonParser';
 
 function App() {

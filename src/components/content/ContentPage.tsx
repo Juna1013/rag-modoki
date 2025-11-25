@@ -1,17 +1,17 @@
 import React from 'react';
-import Footer from './Footer';
-import NavigationBar from './NavigationBar';
+import Footer from '../layout/Footer';
+import NavigationBar from '../layout/NavigationBar';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { baseStyles, headerStyles, cardStyles } from '../styles/sharedStyles';
+import { baseStyles, headerStyles, cardStyles } from '../../styles/sharedStyles';
 
-import cybersecurityMd from '../content/cybersecurity.md?raw';
-import cloudComparisonMd from '../content/cloud-comparison.md?raw';
-import ragExplanationMd from '../content/rag-explanation.md?raw';
-import opencvScanMd from '../content/opencv-scan.md?raw';
+import cybersecurityMd from '../../content/cybersecurity.md?raw';
+import cloudComparisonMd from '../../content/cloud-comparison.md?raw';
+import ragExplanationMd from '../../content/rag-explanation.md?raw';
+import opencvScanMd from '../../content/opencv-scan.md?raw';
 
-import contentData from '../data/contentTiles.json';
+import contentData from '../../data/dashboard/contentTiles.json';
 
 interface ContentPageProps {
   title: string;
