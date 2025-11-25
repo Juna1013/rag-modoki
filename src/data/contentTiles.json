@@ -1,0 +1,122 @@
+{
+    "contentTiles": [
+        {
+            "id": "security",
+            "title": "2025年度のサイバーセキュリティ事案",
+            "description": "最新のセキュリティ脅威と対策について詳しく解説します。",
+            "icon": "🔒",
+            "keywords": [
+                "サイバーセキュリティ",
+                "セキュリティ",
+                "脅威",
+                "対策",
+                "サイバー"
+            ],
+            "contentType": "サイバーセキュリティ",
+            "gradient": "from-blue-600 to-cyan-600",
+            "bgGradient": "from-blue-100 to-cyan-100",
+            "hoverColor": "hover:from-blue-50 hover:to-cyan-50"
+        },
+        {
+            "id": "cloud",
+            "title": "クラウドとオンプレミス比較",
+            "description": "システム導入時の重要な検討項目を比較解説。",
+            "icon": "☁️",
+            "keywords": [
+                "クラウド",
+                "オンプレミス",
+                "AWS",
+                "Azure",
+                "GCP",
+                "システム"
+            ],
+            "contentType": "クラウド比較",
+            "gradient": "from-purple-600 to-indigo-600",
+            "bgGradient": "from-purple-100 to-indigo-100",
+            "hoverColor": "hover:from-purple-50 hover:to-indigo-50"
+        },
+        {
+            "id": "opencv",
+            "title": "紙アンケートのOpenCV処理",
+            "description": "画像処理による自動化技術を解説します。",
+            "icon": "📱",
+            "keywords": [
+                "OpenCV",
+                "画像処理",
+                "アンケート",
+                "スキャン",
+                "自動化"
+            ],
+            "contentType": "紙アンケートのOpenCVによるスキャン",
+            "gradient": "from-orange-600 to-amber-600",
+            "bgGradient": "from-orange-100 to-amber-100",
+            "hoverColor": "hover:from-orange-50 hover:to-amber-50"
+        },
+        {
+            "id": "rag",
+            "title": "RAGの解説",
+            "description": "検索拡張生成技術について詳しく学べます。",
+            "icon": "🤖",
+            "keywords": [
+                "RAG",
+                "検索拡張生成",
+                "AI",
+                "人工知能",
+                "生成AI"
+            ],
+            "contentType": "RAGの解説",
+            "gradient": "from-green-600 to-emerald-600",
+            "bgGradient": "from-green-100 to-emerald-100",
+            "hoverColor": "hover:from-green-50 hover:to-emerald-50"
+        },
+        {
+            "id": "ragbot",
+            "title": "RAG によるクイズレコメンド",
+            "description": "希望するトピックから最適な問題を AI が選択します。",
+            "icon": "✨",
+            "keywords": [
+                "RAG",
+                "クイズ",
+                "レコメンド",
+                "AI",
+                "問題"
+            ],
+            "type": "ragbot",
+            "gradient": "from-red-600 to-pink-600",
+            "bgGradient": "from-red-100 to-pink-100",
+            "hoverColor": "hover:from-red-50 hover:to-pink-50"
+        }
+    ],
+    "navigationItems": [
+        {
+            "label": "ホーム",
+            "key": "home",
+            "type": "home"
+        },
+        {
+            "label": "サイバーセキュリティ",
+            "key": "security",
+            "contentType": "サイバーセキュリティ"
+        },
+        {
+            "label": "クラウド比較",
+            "key": "cloud",
+            "contentType": "クラウド比較"
+        },
+        {
+            "label": "OpenCV処理",
+            "key": "opencv",
+            "contentType": "紙アンケートのOpenCVによるスキャン"
+        },
+        {
+            "label": "RAGの解説",
+            "key": "rag",
+            "contentType": "RAGの解説"
+        },
+        {
+            "label": "RAGクイズ",
+            "key": "ragbot",
+            "type": "ragbot"
+        }
+    ]
+}

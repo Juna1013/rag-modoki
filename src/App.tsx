@@ -36,6 +36,8 @@ function App() {
         setSelectedQuestions([]);
     };
 
+
+
     return (
         <div className="App">
             {currentView === 'dashboard' && (
@@ -49,6 +51,8 @@ function App() {
                 <RagBotPage
                     onStartQuiz={handleStartQuiz}
                     onBackToDashboard={handleBackToDashboard}
+                    onNavigateToRagBot={handleNavigateToRagBot}
+                    onNavigateToContent={handleNavigateToContent}
                 />
             )}
 
@@ -56,6 +60,9 @@ function App() {
                 <ContentPage
                     title={contentType}
                     onBackToDashboard={handleBackToDashboard}
+                    onNavigateToRagBot={handleNavigateToRagBot}
+                    onNavigateToContent={handleNavigateToContent}
+                    currentView={currentView}
                 />
             )}
 

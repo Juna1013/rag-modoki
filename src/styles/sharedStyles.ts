@@ -4,8 +4,8 @@
 
 // ベース背景とレイアウト
 export const baseStyles = {
-  appBackground: 'min-h-screen w-full flex flex-col bg-gradient-to-br from-sky-100 via-blue-200 to-cyan-300',
-  pageContainer: 'flex-grow flex flex-col items-center pt-4 sm:pt-6 md:pt-12 pb-6 px-3 sm:px-6 lg:px-8',
+  appBackground: 'min-h-screen w-full flex flex-col bg-gradient-to-br from-pink-50 via-purple-50 to-purple-100',
+  pageContainer: 'flex-grow flex flex-col items-center pt-24 sm:pt-28 md:pt-32 pb-6 px-3 sm:px-6 lg:px-8',
   contentContainer: 'w-full max-w-6xl',
   dashboardGrid: 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 max-w-6xl mx-auto'
 };

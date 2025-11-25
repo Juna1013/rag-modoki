@@ -30,7 +30,16 @@ export const callGeminiAPI = async (prompt: string): Promise<string> => {
         // プロンプトに基づいてGeminiAPIを呼び出し、出力を取得
         const response = await ai.models.generateContent({
             model: "gemini-2.0-flash",
-            contents: prompt,
+            contents: [
+                {
+                    role: 'user',
+                    parts: [
+                        {
+                            text: prompt
+                        }
+                    ]
+                }
+            ],
             config: {
                 maxOutputTokens: 500,
                 temperature: 0.1,
