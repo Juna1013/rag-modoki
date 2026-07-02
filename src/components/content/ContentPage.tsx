@@ -62,7 +62,7 @@ const ContentPage: React.FC<ContentPageProps> = ({
 
         {/* GitHubアイコン - NavigationBarの右側 */}
         <a
-          href="https://github.com/Juna1013/gemini-quiz-app"
+          href="https://github.com/Juna1013/rag-modoki"
           target="_blank"
           rel="noopener noreferrer"
           className="flex-shrink-0 group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-full hover:bg-gray-900 transition-all duration-200 shadow-lg"
@@ -130,19 +130,19 @@ const ContentPage: React.FC<ContentPageProps> = ({
               <div className="p-6 sm:p-8 md:p-10 max-w-none">
                 <ReactMarkdown
                   components={{
-                    h1: ({ node, ...props }) => <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" {...props} />,
-                    h2: ({ node, ...props }) => <h2 className="text-2xl sm:text-3xl font-bold mt-8 mb-4 text-gray-800 border-b-2 border-blue-200 pb-2" {...props} />,
-                    h3: ({ node, ...props }) => <h3 className="text-xl sm:text-2xl font-semibold mt-6 mb-3 text-gray-800" {...props} />,
-                    p: ({ node, ...props }) => <p className="text-base sm:text-lg leading-relaxed mb-4 text-gray-700" {...props} />,
-                    ul: ({ node, ...props }) => <ul className="list-disc list-inside mb-4 space-y-2 text-gray-700" {...props} />,
-                    ol: ({ node, ...props }) => <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-700" {...props} />,
-                    li: ({ node, ...props }) => <li className="text-base sm:text-lg ml-4" {...props} />,
-                    table: ({ node, ...props }) => <table className="w-full border-collapse mb-6 border border-gray-300" {...props} />,
-                    thead: ({ node, ...props }) => <thead className="bg-blue-100" {...props} />,
-                    th: ({ node, ...props }) => <th className="border border-gray-300 px-4 py-2 text-left font-semibold text-gray-800" {...props} />,
-                    td: ({ node, ...props }) => <td className="border border-gray-300 px-4 py-2 text-gray-700" {...props} />,
-                    code(props: any) {
-                      const { children, className, node, ...rest } = props
+                    h1: ({ node: _node, ...props }) => <h1 className="text-3xl sm:text-4xl font-bold mb-6 text-gray-900" {...props} />,
+                    h2: ({ node: _node, ...props }) => <h2 className="text-2xl sm:text-3xl font-bold mt-8 mb-4 text-gray-800 border-b-2 border-blue-200 pb-2" {...props} />,
+                    h3: ({ node: _node, ...props }) => <h3 className="text-xl sm:text-2xl font-semibold mt-6 mb-3 text-gray-800" {...props} />,
+                    p: ({ node: _node, ...props }) => <p className="text-base sm:text-lg leading-relaxed mb-4 text-gray-700" {...props} />,
+                    ul: ({ node: _node, ...props }) => <ul className="list-disc list-inside mb-4 space-y-2 text-gray-700" {...props} />,
+                    ol: ({ node: _node, ...props }) => <ol className="list-decimal list-inside mb-4 space-y-2 text-gray-700" {...props} />,
+                    li: ({ node: _node, ...props }) => <li className="text-base sm:text-lg ml-4" {...props} />,
+                    table: ({ node: _node, ...props }) => <table className="w-full border-collapse mb-6 border border-gray-300" {...props} />,
+                    thead: ({ node: _node, ...props }) => <thead className="bg-blue-100" {...props} />,
+                    th: ({ node: _node, ...props }) => <th className="border border-gray-300 px-4 py-2 text-left font-semibold text-gray-800" {...props} />,
+                    td: ({ node: _node, ...props }) => <td className="border border-gray-300 px-4 py-2 text-gray-700" {...props} />,
+                    code(props: React.ComponentPropsWithoutRef<'code'> & { node?: unknown }) {
+                      const { children, className, node: _node, ...rest } = props
                       const match = /language-(\w+)/.exec(className || '')
                       return match ? (
                         <SyntaxHighlighter
@@ -159,10 +159,10 @@ const ContentPage: React.FC<ContentPageProps> = ({
                         </code>
                       )
                     },
-                    pre: ({ node, ...props }) => <pre className="not-prose mb-4" {...props} />,
-                    blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-blue-500 bg-blue-50 pl-4 py-2 my-4 italic text-gray-700" {...props} />,
-                    a: ({ node, ...props }) => <a className="text-blue-600 hover:text-blue-800 underline" {...props} />,
-                    hr: ({ node, ...props }) => <hr className="my-6 border-t-2 border-gray-300" {...props} />,
+                    pre: ({ node: _node, ...props }) => <pre className="not-prose mb-4" {...props} />,
+                    blockquote: ({ node: _node, ...props }) => <blockquote className="border-l-4 border-blue-500 bg-blue-50 pl-4 py-2 my-4 italic text-gray-700" {...props} />,
+                    a: ({ node: _node, ...props }) => <a className="text-blue-600 hover:text-blue-800 underline" {...props} />,
+                    hr: ({ node: _node, ...props }) => <hr className="my-6 border-t-2 border-gray-300" {...props} />,
                   }}
                 >
                   {getContentMarkdown()}

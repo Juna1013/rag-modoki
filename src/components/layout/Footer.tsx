@@ -8,7 +8,7 @@ const Footer = () => {
       <div className={footerStyles.content}>
         <div className={footerStyles.text}>
           <div>
-            © {currentYear} 応用情報技術者試験クイズ
+            © {currentYear} 茨城高専 メディア・デザイン・ラボ
           </div>
         </div>
       </div>

@@ -1,19 +1,19 @@
 {
-  "name": "toon-app",
+  "name": "rag-modoki",
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "応用情報技術者試験のクイズアプリ - AI支援学習ツール",
-  "author": "juna1013",
+  "description": "サイバーセキュリティ啓発イベント展示用のRAGプロトタイプ＆ITクイズアプリ",
+  "author": "Juna1013",
   "repository": {
     "type": "git",
-    "url": "https://github.com/juna1013/gemini-quiz-app.git"
+    "url": "https://github.com/Juna1013/rag-modoki.git"
   },
   "keywords": [
+    "rag",
+    "gemini",
     "quiz",
-    "learning",
-    "it-certification",
-    "ai",
+    "cybersecurity",
     "react",
     "vite",
     "typescript"

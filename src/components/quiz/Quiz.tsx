@@ -108,7 +108,7 @@ const Quiz = ({ questions, onBackToDashboard }: QuizProps) => {
               </button>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 bg-clip-text text-transparent mb-2 leading-tight">
-              応用情報技術者試験 クイズ
+              ITセキュリティクイズ
             </h1>
             <div className={headerStyles.pageSubtitle}>
               <span>現在のスコア: {score}/{questionNumber - 1}</span>
