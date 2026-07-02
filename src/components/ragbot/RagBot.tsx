@@ -321,7 +321,7 @@ ${conversationHistory}
       if (!responseToUse) {
         // フォールバック処理
         if (mode === 'quiz') {
-          let selectedQuestions = retrieveRelevant(searchQuery, maxResults);
+          const selectedQuestions = retrieveRelevant(searchQuery, maxResults);
           if (selectedQuestions.length === 0) {
             setMessages(prev => [...prev, {
               id: (Date.now() + 1).toString(),
@@ -354,7 +354,7 @@ ${conversationHistory}
           const maxResultsMatch = responseToUse.match(/MAX_RESULTS:\s*(\d+)/);
           const difficultyMatch = responseToUse.match(/DIFFICULTY:\s*(basic|intermediate|advanced|all)/);
 
-          let cleanResponse = responseToUse
+          const cleanResponse = responseToUse
             .replace(/SEARCH_QUERY:.+/g, '')
             .replace(/MAX_RESULTS:.+/g, '')
             .replace(/DIFFICULTY:.+/g, '')
