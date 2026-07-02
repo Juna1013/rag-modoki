@@ -25,7 +25,7 @@ POST /api/chat (Vercel Function)
     ↓
 コサイン類似度検索（事前計算済みチャンク・上位4件）
     ↓
-Gemini による根拠付き回答生成（gemini-2.0-flash）
+Gemini による根拠付き回答生成（gemini-2.5-flash）
     ↓
 回答＋出典（記事名・節・類似度）を表示
 ```
@@ -236,24 +236,26 @@ Gemini APIが利用できない場合、パターンマッチングで代替：
 
 ### 問題数の上限変更
 ```typescript
-// src/components/RagBot.tsx
+// src/components/ragbot/RagBot.tsx
 const maxResults = Math.min(Math.max(parseInt(numberMatch[1]), 1), 10);
 // 10を希望の上限値に変更
 ```
 
 ### トピックの追加
 ```typescript
-// src/components/RagBot.tsx
+// src/components/ragbot/RagBot.tsx（フォールバック検索用）
 const keywordMap = {
   // 既存のトピック...
   '新しいトピック': ['keyword1', 'keyword2', ...],
 };
 ```
 
-### プロンプトの調整
+### プロンプト・検索パラメータの調整
 ```typescript
-// src/components/RagBot.tsx
-const prompt = `あなたの指示をカスタマイズ...`;
+// api/_lib/rag.ts
+const TOP_K = 4;            // 参考資料として使うチャンク数
+const MIN_SIMILARITY = 0.5; // 採用する類似度のしきい値
+// プロンプトは answerWithRag / recommendQuiz 内で定義
 ```
 
 ## 🐛 トラブルシューティング
@@ -290,6 +292,6 @@ const prompt = `あなたの指示をカスタマイズ...`;
 
 ## 🔐 セキュリティ
 
-- **APIキー**: 環境変数で管理、クライアント側で使用
+- **APIキー**: サーバー側（Vercel Functions）の環境変数のみで使用し、フロントエンドに露出しない
 - **入力検証**: XSS対策として入力をサニタイズ
 - **エラーハンドリング**: センシティブな情報を含めない

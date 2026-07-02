@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import { GoogleGenAI } from '@google/genai';
 
-const GENERATION_MODEL = 'gemini-2.0-flash';
+const GENERATION_MODEL = 'gemini-2.5-flash';
 const TOP_K = 4;
 const MIN_SIMILARITY = 0.5;
 
@@ -98,7 +98,8 @@ async function generate(prompt: string, maxOutputTokens: number): Promise<string
   const response = await ai.models.generateContent({
     model: GENERATION_MODEL,
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
-    config: { maxOutputTokens, temperature: 0.1 },
+    // 展示用途では応答速度を優先し、thinkingを無効化する
+    config: { maxOutputTokens, temperature: 0.1, thinkingConfig: { thinkingBudget: 0 } },
   });
   if (response.text === undefined) {
     throw new Error('No text in Gemini response.');
