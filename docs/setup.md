@@ -14,8 +14,8 @@
 
 ### 1. リポジトリのクローン
 ```bash
-git clone https://github.com/Juna1013/toon-app.git
-cd toon-app
+git clone https://github.com/Juna1013/rag-modoki.git
+cd rag-modoki
 ```
 
 ### 2. 依存関係のインストール
