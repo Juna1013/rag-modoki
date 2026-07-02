@@ -1,13 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { parseTOON, type QuizData } from '../../utils/toonParser';
-import { callGeminiAPI } from '../../utils/gemini';
+import { sendChat, type RagSource } from '../../utils/ragApi';
 import quizRaw from '../../data/quiz/quizData.toon?raw';
-
-// Markdownコンテンツのインポート
-import cybersecurityMd from '../../content/cybersecurity.md?raw';
-import cloudComparisonMd from '../../content/cloud-comparison.md?raw';
-import ragExplanationMd from '../../content/rag-explanation.md?raw';
-import opencvScanMd from '../../content/opencv-scan.md?raw';
 
 interface RagBotProps {
   onStartQuiz?: (questions: QuizData[]) => void;
@@ -18,53 +12,19 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   questions?: QuizData[];
-}
-
-interface Document {
-  id: string;
-  title: string;
-  content: string;
-  keywords: string[];
+  sources?: RagSource[];
 }
 
 const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
   const quizzes: QuizData[] = parseTOON(quizRaw as string);
   const advanced = quizzes.filter(q => q.id >= 67 && q.id <= 100);
 
-  // ドキュメントデータベースの構築
-  const documents: Document[] = [
-    {
-      id: 'security',
-      title: '2025年度のサイバーセキュリティ事案',
-      content: cybersecurityMd,
-      keywords: ['セキュリティ', 'サイバー', '攻撃', '脆弱性', 'ランサムウェア', 'ゼロデイ', 'サプライチェーン']
-    },
-    {
-      id: 'cloud',
-      title: 'クラウドとオンプレミス比較',
-      content: cloudComparisonMd,
-      keywords: ['クラウド', 'オンプレミス', 'AWS', 'Azure', 'GCP', 'コスト', '拡張性', 'セキュリティ']
-    },
-    {
-      id: 'rag',
-      title: 'RAGの解説',
-      content: ragExplanationMd,
-      keywords: ['RAG', '検索拡張生成', 'LLM', 'AI', 'ハルシネーション', 'ベクトル', '埋め込み']
-    },
-    {
-      id: 'opencv',
-      title: '紙アンケートのOpenCVによるスキャン',
-      content: opencvScanMd,
-      keywords: ['OpenCV', '画像処理', 'スキャン', 'アンケート', 'OCR', 'Python', '輪郭']
-    }
-  ];
-
   const [query, setQuery] = useState('');
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       role: 'assistant',
-      content: 'こんにちは！RAGボットです😊\n\nアプリ内の記事内容について質問したり、クイズを出題したりできます。\n\n💡 例：\n・「RAGって何？」\n・「最近のセキュリティ事案は？」\n・「ネットワークの問題を出して」'
+      content: 'こんにちは！RAGボットです😊\n\nアプリ内の記事をベクトル検索して、根拠（出典）付きで質問に回答します。クイズの出題もできます。\n\n💡 例：\n・「RAGって何？」\n・「最近のセキュリティ事案は？」\n・「ネットワークの問題を出して」'
     }
   ]);
   const [loading, setLoading] = useState(false);
@@ -75,41 +35,6 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages, loading]);
-
-  // ドキュメント検索（簡易版）
-  function retrieveDocuments(userQuery: string): string {
-    const queryLower = userQuery.toLowerCase();
-
-    // キーワードマッチングでスコアリング
-    const scoredDocs = documents.map(doc => {
-      let score = 0;
-      // タイトルの一致
-      if (doc.title.toLowerCase().includes(queryLower)) score += 5;
-
-      // キーワードの一致
-      doc.keywords.forEach(keyword => {
-        if (queryLower.includes(keyword.toLowerCase())) score += 3;
-      });
-
-      // 本文の部分一致（簡易）
-      if (doc.content.toLowerCase().includes(queryLower)) score += 1;
-
-      return { doc, score };
-    });
-
-    // スコアが高い順にソートし、スコアが0より大きいものを選択
-    const relevantDocs = scoredDocs
-      .filter(item => item.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .map(item => item.doc);
-
-    // 上位2件のドキュメントを返す（なければ空文字）
-    if (relevantDocs.length === 0) return '';
-
-    return relevantDocs.slice(0, 2).map(doc =>
-      `【タイトル: ${doc.title}】\n${doc.content}\n`
-    ).join('\n---\n');
-  }
 
   function retrieveRelevant(userQuery: string, maxDocs = 5) {
     // 全問題から検索（基本・中級・上級すべて）
@@ -242,75 +167,19 @@ const RagBot: React.FC<RagBotProps> = ({ onStartQuiz }) => {
         }
       }
 
-      // Gemini APIを試行
+      // チャットAPI（サーバー側でベクトル検索＋生成）を試行
       let aiResponse = '';
+      let ragSources: RagSource[] | undefined;
       if (shouldUseGemini) {
         try {
-          const conversationHistory = messages
+          const history = messages
             .slice(-4)
-            .map(m => `${m.role === 'user' ? 'ユーザー' : 'アシスタント'}: ${m.content}`)
-            .join('\n');
-
-          let prompt = '';
-
-          if (mode === 'quiz') {
-            // クイズレコメンドモードのプロンプト
-            const availableTopics = Array.from(new Set(
-              quizzes.map(q => {
-                const topics = [];
-                if (q.question.toLowerCase().includes('ネットワーク') || q.question.toLowerCase().includes('tcp') || q.question.toLowerCase().includes('ip')) topics.push('ネットワーク');
-                if (q.question.toLowerCase().includes('データベース') || q.question.toLowerCase().includes('sql')) topics.push('データベース');
-                if (q.question.toLowerCase().includes('セキュリティ') || q.question.toLowerCase().includes('暗号')) topics.push('セキュリティ');
-                if (q.question.toLowerCase().includes('アルゴリズム') || q.question.toLowerCase().includes('ソート')) topics.push('アルゴリズム');
-                return topics;
-              }).flat()
-            )).join('、');
-
-            prompt = `あなたはクイズレコメンドAIです。ユーザーの入力から最適なクイズを検索するためのパラメータを抽出してください。
-
-【利用可能なトピック】${availableTopics}
-
-【会話履歴】
-${conversationHistory}
-ユーザー: ${userInput}
-
-【指示】
-1. ユーザーの入力に基づいて、以下の形式でのみ応答してください：
-   SEARCH_QUERY: <検索キーワード>
-   MAX_RESULTS: <1-10>
-   DIFFICULTY: <basic|intermediate|advanced|all>
-   (ユーザーへの短いメッセージ)
-
-2. 雑談や挨拶の場合は、パラメータなしでメッセージのみ返してください。
-3. メッセージは親しみやすく、100文字以内で記述してください。
-
-応答:`;
-          } else {
-            // RAG検索拡張生成モードのプロンプト
-            const relevantContext = retrieveDocuments(userInput);
-
-            prompt = `あなたはRAG（検索拡張生成）AIです。以下の参考資料に基づいてユーザーの質問に答えてください。
-
-【参考資料（Markdown記事）】
-${relevantContext || '（関連する資料は見つかりませんでした。一般的な知識で回答してください。）'}
-
-【会話履歴】
-${conversationHistory}
-ユーザー: ${userInput}
-
-【指示】
-1. 【参考資料】の内容に基づいて回答してください。
-2. 参考資料にない情報は、一般的な知識として答えてください。
-3. 回答はMarkdown形式で見やすく整形してください（箇条書きなどを活用）。
-4. クイズの出題は行わないでください。
-5. 回答は親しみやすく、簡潔に（300文字程度）してください。
-
-応答:`;
-          }
-
-          aiResponse = await callGeminiAPI(prompt);
+            .map(m => ({ role: m.role, content: m.content }));
+          const result = await sendChat(mode, userInput, history);
+          aiResponse = result.text;
+          ragSources = result.sources;
         } catch (apiError) {
-          console.warn('Gemini API failed, using fallback:', apiError);
+          console.warn('chat API failed, using fallback:', apiError);
           aiResponse = '';
         }
       }
@@ -396,11 +265,12 @@ ${conversationHistory}
             }]);
           }
         } else {
-          // RAGモード: そのまま表示
+          // RAGモード: 回答と出典を表示
           setMessages(prev => [...prev, {
             id: (Date.now() + 1).toString(),
             role: 'assistant',
-            content: responseToUse
+            content: responseToUse,
+            sources: ragSources
           }]);
         }
       }
@@ -460,6 +330,20 @@ ${conversationHistory}
                   <pre className="whitespace-pre-wrap font-sans bg-transparent border-none p-0 m-0 overflow-x-auto max-w-full">
                     {msg.content}
                   </pre>
+
+                  {msg.sources && msg.sources.length > 0 && (
+                    <div className="mt-3 pt-3 border-t border-gray-200">
+                      <div className="text-[11px] font-medium text-gray-400 mb-1.5">出典（類似度順）</div>
+                      <div className="flex flex-col gap-1">
+                        {msg.sources.map((source) => (
+                          <div key={source.ref} className="text-xs text-gray-500">
+                            [{source.ref}] {source.docTitle}
+                            {source.heading && <span className="text-gray-400"> › {source.heading}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {msg.questions && onStartQuiz && (
