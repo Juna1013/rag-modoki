@@ -62,7 +62,7 @@ const ContentPage: React.FC<ContentPageProps> = ({
 
         {/* GitHubアイコン - NavigationBarの右側 */}
         <a
-          href="https://github.com/Juna1013/rag-modoki"
+          href="https://github.com/Juna1013/security-rag"
           target="_blank"
           rel="noopener noreferrer"
           className="flex-shrink-0 group flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-gray-800 rounded-full hover:bg-gray-900 transition-all duration-200 shadow-lg"

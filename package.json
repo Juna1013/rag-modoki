@@ -1,5 +1,5 @@
 {
-  "name": "rag-modoki",
+  "name": "security-rag-app",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -7,7 +7,7 @@
   "author": "Juna1013",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Juna1013/rag-modoki.git"
+    "url": "https://github.com/Juna1013/security-rag-app.git"
   },
   "keywords": [
     "rag",

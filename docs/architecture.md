@@ -36,7 +36,7 @@
 ## 📁 ディレクトリ構造
 
 ```
-rag-modoki/
+security-rag/
 ├── src/
 │   ├── components/          # Reactコンポーネント
 │   │   ├── DashboardNew.tsx    # ダッシュボード
